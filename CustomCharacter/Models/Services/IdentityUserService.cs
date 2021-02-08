@@ -12,7 +12,6 @@ namespace CustomCharacter.Models.Services
 {
     public class IdentityUserService : IAppUser
     {
-        //inject a usermanager
         private UserManager<AppUser> UserManager;
         private JwtTokenService tokenService;
         public IdentityUserService(UserManager<AppUser> manager, JwtTokenService jwtTokenService)
@@ -32,7 +31,8 @@ namespace CustomCharacter.Models.Services
             var user = new AppUser
             {
                 UserName = data.Username,
-                PhoneNumber = data.PhoneNumber
+                PhoneNumber = data.PhoneNumber,
+                Email = data.Email
             };
 
             var result = await UserManager.CreateAsync(user, data.Password);
@@ -54,6 +54,7 @@ namespace CustomCharacter.Models.Services
             {
                 var errorKey =
                     error.Code.Contains("Password") ? nameof(data.Password) :
+                    error.Code.Contains("Email") ? nameof(data.Email) :
                     error.Code.Contains("UserName") ? nameof(data.Username) :
                      "";
                 modelState.AddModelError(errorKey, error.Description);
@@ -67,7 +68,7 @@ namespace CustomCharacter.Models.Services
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        /// <returns>returns authed userDTO</returns>
+        /// <returns>returns an AppUserDTO if auth'd</returns>
         public async Task<AppUserDTO> Authenticate(string username, string password)
         {
             var user = await UserManager.FindByNameAsync(username);
@@ -87,7 +88,7 @@ namespace CustomCharacter.Models.Services
         /// returns a user
         /// </summary>
         /// <param name="principal"></param>
-        /// <returns>returns a user</returns>
+        /// <returns>returns an AppUserDTO</returns>
         public async Task<AppUserDTO> GetUser(ClaimsPrincipal principal)
         {
             var user = await UserManager.GetUserAsync(principal);

@@ -17,7 +17,21 @@ namespace CustomCharacter.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            base.OnModelCreating(modelBuilder);
+
+
+
+
+
+
+
+
+
+
+
+            seedRole(modelBuilder, "DungeonMaster", "create", "update", "delete");
+            seedRole(modelBuilder, "Creator", "create", "update");
+            seedRole(modelBuilder, "Player", "create");
         }
 
         public DbSet<Ability> Abilities { get; set; }
@@ -25,6 +39,28 @@ namespace CustomCharacter.Data
         public DbSet<Race> Races { get; set; }
         public DbSet<Character> Characters { get; set; }
 
+        private int id = 1;
+        private void seedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(role);
 
+            var roleClaims = permissions.Select(permission =>
+                new IdentityRoleClaim<string>
+                {
+                    Id = id++,
+                    RoleId = role.Id,
+                    ClaimType = "permissions",
+                    ClaimValue = permission
+                }
+            );
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(roleClaims);
+        }
     }
 }
