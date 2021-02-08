@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.Interface
 {
-    public class IClass
+    public interface IClass
     {
     }
 }
