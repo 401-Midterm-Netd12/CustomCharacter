@@ -7,5 +7,8 @@ namespace CustomCharacter.Models.API
 {
     public class RaceDTO
     {
+        public int Id { get; set; }
+        public string RaceType { get; set; }
+        public List<Ability> Abilities { get; set; }
     }
 }

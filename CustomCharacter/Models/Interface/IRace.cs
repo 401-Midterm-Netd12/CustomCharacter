@@ -1,11 +1,22 @@
-﻿using System;
+﻿using CustomCharacter.Models.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.Interface
 {
-    public class IRace
+    public interface IRace
     {
+        Task<RaceDTO> CreateRace(RaceDTO raceDTO);
+        Task<ClassDTO> GetRace(int Id);
+        Task<List<ClassDTO>> GetRaces();
+        Task<Class> UpdateRace(RaceDTO raceDTO);
+        Task DeleteClass(int Id);
+
+        //new methods required in the service to add and remove amenities
+        Task AddSkillToClass(int classId, int skillId);
+
+        Task RemoveSkillFromClass(int classId, int skillId);
     }
 }
