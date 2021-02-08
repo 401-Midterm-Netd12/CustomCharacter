@@ -12,6 +12,6 @@ namespace CustomCharacter.Models.API
         public RaceTypes RaceType { get; set; }
 
         public int StatModifer { get; set; }
-        public List<AbilityDTO> Abilities { get; set; }
+        public List<RaceAbility> Abilities { get; set; }
     }
 }
