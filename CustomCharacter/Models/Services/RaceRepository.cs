@@ -34,7 +34,7 @@ namespace CustomCharacter.Models.Services
             return raceDTO;
         }
 
-        public  async Task<ClassDTO> GetRace(int Id)
+        public  async Task<RaceDTO> GetRace(int Id)
         {
             var race = await _context.Races.Include(Race => Race.Abilities).ToListAsync();
             return race
@@ -45,7 +45,13 @@ namespace CustomCharacter.Models.Services
                 StatModifer = Race.StatModifier,
                 Abilities = Race.Abilities
 
-             
+              .Select(a => new AbilityDTO()
+              {
+                  Id = a.Id,
+                  Name = a.Amenity.Name
+              }).ToList()
+
+            }).FirstOrDefault();
         }
 
         public Task<List<ClassDTO>> GetRaces()
