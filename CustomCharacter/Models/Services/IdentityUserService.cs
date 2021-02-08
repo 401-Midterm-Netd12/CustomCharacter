@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.Services
 {
-    public class IdentitityUserService
+    public class IdentityUserService
     {
     }
 }
