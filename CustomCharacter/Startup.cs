@@ -28,6 +28,17 @@ namespace CustomCharacter
 
             app.UseRouting();
 
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "/api/{documentName}/swagger.json";
+            });
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Matthews Hotels");
+                options.RoutePrefix = "docs";
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
