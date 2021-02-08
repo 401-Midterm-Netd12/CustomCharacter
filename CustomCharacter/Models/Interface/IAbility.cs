@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.Interface
 {
-    public class IAbility
+    public interface IAbility
     {
     }
 }

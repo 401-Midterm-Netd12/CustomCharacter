@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.API
 {
-    public class AppUserDTO
+    public class LoginData
     {
-        public string Id { get; set; }
+        [Required]
         public string Username { get; set; }
-        public string Token { get; set; }
+        [Required]
+        public string Password { get; set; }
     }
 }
