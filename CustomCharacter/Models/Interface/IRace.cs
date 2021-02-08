@@ -15,8 +15,8 @@ namespace CustomCharacter.Models.Interface
         Task DeleteClass(int Id);
 
         //new methods required in the service to add and remove amenities
-        Task AddSkillToClass(int classId, int skillId);
+        Task AddAbilityToRace(int raceId, int skillId);
 
-        Task RemoveSkillFromClass(int classId, int skillId);
+        Task RemoveAbilityFromRace(int raceId, int skillId);
     }
 }

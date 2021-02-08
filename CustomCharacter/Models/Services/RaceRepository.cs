@@ -9,17 +9,12 @@ namespace CustomCharacter.Models.Services
 {
     public class RaceRepository : IRace
     {
-        public Task AddSkillToClass(int classId, int skillId)
+        public Task AddAbilityToRace(int classId, int skillId)
         {
             throw new NotImplementedException();
         }
 
         public Task<RaceDTO> CreateRace(RaceDTO raceDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteClass(int Id)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +29,7 @@ namespace CustomCharacter.Models.Services
             throw new NotImplementedException();
         }
 
-        public Task RemoveSkillFromClass(int classId, int skillId)
+        public Task RemoveAbilityFromRace(int classId, int skillId)
         {
             throw new NotImplementedException();
         }
@@ -43,5 +38,10 @@ namespace CustomCharacter.Models.Services
         {
             throw new NotImplementedException();
         }
+        public Task DeleteClass(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
