@@ -13,7 +13,7 @@ namespace CustomCharacter.Models.Services
     {
         private readonly CustomCharacterContext _context;
 
-        RaceRepository(CustomCharacterContext context)
+        public RaceRepository(CustomCharacterContext context)
         {
             _context = context;
 

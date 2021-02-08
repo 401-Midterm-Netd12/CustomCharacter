@@ -40,7 +40,7 @@ namespace CustomCharacter.Data
         public DbSet<Race> Races { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<ClassSkill> ClassSkills { get; set; }
-
+        public DbSet<Skill> Skills { get; set; }
 
 
         public DbSet<RaceAbility> RaceAbilities { get; set; }

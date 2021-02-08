@@ -13,7 +13,6 @@ namespace CustomCharacter.Models.Interface
         Task<List<SkillDTO>> GetSkills();
         Task<Skill> UpdateSkill(int Id, SkillDTO Skill);
         Task DeleteSkill(int Id);
-        Task AddSkillToRace(int SkillId, int RaceId);
-        Task RemoveSkill(int SkillId, int RaceId);
+
     }
 }
