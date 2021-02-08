@@ -10,5 +10,5 @@ namespace CustomCharacter.Models
         public int ClassId { get; set; }
         public int SkillId { get; set; }
 
-}
+    }
 }

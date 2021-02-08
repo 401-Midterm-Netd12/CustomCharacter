@@ -7,5 +7,13 @@ namespace CustomCharacter.Models.API
 {
     public class CharacterDTO
     {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int RaceId { get; set; }
+        public int ClassId { get; set; }
+        public string Name { get; set; }
+        public int HP { get; set; }
+        public int Dex { get; set; }
+        public int Strength { get; set; }
     }
 }

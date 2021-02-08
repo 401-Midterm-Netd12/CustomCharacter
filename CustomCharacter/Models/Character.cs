@@ -14,6 +14,6 @@ namespace CustomCharacter.Models
         public string Name { get; set; }
         public int HP { get; set; }
         public int Dex { get; set; }
-        public int Str { get; set; }
+        public int Strength { get; set; }
     }
 }
