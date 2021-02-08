@@ -6,10 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Data\" />
-    <Folder Include="Models\API\" />
-    <Folder Include="Models\Interface\" />
-    <Folder Include="Models\Services\" />
   </ItemGroup>
 
 </Project>
