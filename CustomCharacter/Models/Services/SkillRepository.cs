@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.Services
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class SkillRepository : ISkill
     {
         private readonly CustomCharacterContext _context;

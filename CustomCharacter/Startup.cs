@@ -70,7 +70,7 @@ namespace CustomCharacter
             services.AddTransient<IRace, RaceRepository>();        //ameilia
             services.AddTransient<IAppUser, IdentityUserService>();
             services.AddTransient<ICharacter, CharacterRepository>();
-            //services.AddTransient<ISkill, SkillRepository>();
+            services.AddTransient<ISkill, SkillRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
