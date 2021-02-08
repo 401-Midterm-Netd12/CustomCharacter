@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.API
 {
-    public class AbilityDTO
+    public class SkillDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

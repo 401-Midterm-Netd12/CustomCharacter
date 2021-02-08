@@ -5,13 +5,9 @@ using System.Threading.Tasks;
 
 namespace CustomCharacter.Models
 {
-    public class Ability
+    public class RaceAbility
     {
-        public int Id { get; set; }
         public int RaceId { get; set; }
-
-
-        public string Name { get; set; }
-        public string Desc { get; set; }
+        public int AbilityId { get; set; }
     }
 }
