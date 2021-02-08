@@ -26,7 +26,7 @@ namespace CustomCharacter.Models.Services
                 Id = raceDTO.Id,
                 RaceType = raceDTO.RaceType,
                 StatModifier = raceDTO.StatModifer,
-                Abilities = raceDTO.Abilities
+                Abilities = raceDTO.Abilities.ToList()
             };
 
             _context.Entry(newRace).State = EntityState.Added;
@@ -34,7 +34,22 @@ namespace CustomCharacter.Models.Services
             return raceDTO;
         }
 
-        public  async Task<RaceDTO> GetRace(int Id)
+        public async Task<Race> GetRace(int Id)
+        {
+            var race = await _context.Races.Include(Race => Race.Id == Id).FirstOrDefaultAsync();
+
+            RaceDTO raceDTO = new RaceDTO()
+            {
+                Id = Id,
+                RaceType = race.RaceType,
+                StatModifer = race.StatModifier,
+                Abilities = race.Abilities.ToList()
+
+            };
+            return race;
+        }
+
+        public async Task<List<RaceDTO>> GetRaces()
         {
             var race = await _context.Races.Include(Race => Race.Abilities).ToListAsync();
             return race
@@ -43,37 +58,50 @@ namespace CustomCharacter.Models.Services
                 Id = Race.Id,
                 RaceType = Race.RaceType,
                 StatModifer = Race.StatModifier,
-                Abilities = Race.Abilities
+                Abilities = Race.Abilities.ToList()
 
-              .Select(a => new AbilityDTO()
-              {
-                  Id = a.Id,
-                  Name = a.Amenity.Name
-              }).ToList()
-
-            }).FirstOrDefault();
+            }).ToList();
         }
 
-        public Task<List<ClassDTO>> GetRaces()
+        public async Task AddAbilityToRace(int raceId, int abilityId)
         {
-            throw new NotImplementedException();
+
+            RaceAbility raceAbility = new RaceAbility()
+            {
+                RaceId = raceId,
+                AbilityId = abilityId
+            };
+
+            _context.Entry(raceAbility).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+        }
+        public async Task RemoveAbilityFromRace(int raceId, int abilityId)
+        {
+            var result = await _context.RaceAbilities.FirstOrDefaultAsync(x => x.RaceId == raceId && x.AbilityId == abilityId);
+
+            _context.Entry(result).State = EntityState.Deleted;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task AddAbilityToRace(int classId, int skillId)
+        public async Task<Race> UpdateRace(RaceDTO raceDTO)
         {
-            throw new NotImplementedException();
-        }
-        public Task RemoveAbilityFromRace(int classId, int skillId)
-        {
-            throw new NotImplementedException();
-        }
+            var race = await GetRace(raceDTO.Id);
+            race.Id = raceDTO.Id;
+            race.RaceType = raceDTO.RaceType;
+            race.StatModifier = raceDTO.StatModifer;
+            race.Abilities = raceDTO.Abilities.ToList();
 
-        public Task<Class> UpdateRace(RaceDTO raceDTO)
-        {
-            throw new NotImplementedException();
+            _context.Entry(race).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return race;
+
         }
-        public Task DeleteClass(int Id)
+        public async Task DeleteRace(int Id)
         {
-            throw new NotImplementedException();
+            Race race = await GetRace(Id);
+            _context.Entry(race).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
     }
+}

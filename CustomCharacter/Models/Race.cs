@@ -12,7 +12,7 @@ namespace CustomCharacter.Models
 
         public int StatModifier { get; set; }
         public RaceTypes RaceType { get; set; }
-        public List<AbilityDTO> Abilities { get; set; }
+        public List<RaceAbility> Abilities { get; set; }
         public enum RaceTypes { Elf = 1, Goblin = 2, Human = 3, Dwarf = 4, Gnome = 5 }
     }
 }

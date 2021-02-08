@@ -39,6 +39,13 @@ namespace CustomCharacter.Data
         public DbSet<Race> Races { get; set; }
         public DbSet<Character> Characters { get; set; }
 
+
+
+        public DbSet<RaceAbility> RaceAbilities { get; set; }
+
+
+
+
         private int id = 1;
         private void seedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)
         {
