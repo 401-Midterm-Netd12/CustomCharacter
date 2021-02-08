@@ -13,7 +13,5 @@ namespace CustomCharacter.Models.Interface
         Task<List<AbilityDTO>> GetAbilities();
         Task<Ability> UpdateAbilities(int Id, AbilityDTO Ability);
         Task DeleteAbility(int Id);
-        Task AddAbilityToRace(int AbilityId, int RaceId);
-        Task RemoveAbilityy(int AbilityId, int RaceId);
     }
 }
