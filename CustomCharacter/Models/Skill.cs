@@ -8,6 +8,7 @@ namespace CustomCharacter.Models
     public class Skill
     {
         public int Id { get; set; }
+        public int ClassId { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; }
     }
