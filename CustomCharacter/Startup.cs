@@ -38,7 +38,7 @@ namespace CustomCharacter
 
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = false;
             })
                 .AddEntityFrameworkStores<CustomCharacterContext>();
 
@@ -57,15 +57,33 @@ namespace CustomCharacter
                     options.TokenValidationParameters = JwtTokenService.GetValidationParams(Configuration);
                 });
 
-            services.AddTransient<IAbility, AbilityRepository>();
-            services.AddTransient<IClass, ClassRepository>();
-            services.AddTransient<IRace, RaceRepository>();
+            services.AddAuthorization(options =>
+            {
+                // Add "Name of Policy", and the Lambda returns a definition
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
+            });
+
+            //services.AddTransient<IAbility, AbilityRepository>();
+            //services.AddTransient<ISkill, SkillRepository>();
+            //services.AddTransient<IClass, ClassRepository>();      //ameilia
+            //services.AddTransient<IRace, RaceRepository>();        //ameilia
             services.AddTransient<IAppUser, IdentityUserService>();
-            services.AddTransient<ICharacter, CharacterRepository>();
+            //services.AddTransient<ICharacter, CharacterRepository>(); 
 
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
           );
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Custom Characters",
+                    Version = "v1"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +95,8 @@ namespace CustomCharacter
             }
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             //=================================================================== Swagger
             app.UseSwagger(options =>
