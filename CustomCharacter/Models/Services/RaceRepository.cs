@@ -1,7 +1,12 @@
-﻿using CustomCharacter.Models.API;
+﻿using CustomCharacter.Data;
+using CustomCharacter.Models.API;
 using CustomCharacter.Models.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,14 +14,27 @@ namespace CustomCharacter.Models.Services
 {
     public class RaceRepository : IRace
     {
-        public Task AddAbilityToRace(int classId, int skillId)
+        private readonly CustomCharacterContext _context;
+
+        RaceRepository(CustomCharacterContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+
         }
 
-        public Task<RaceDTO> CreateRace(RaceDTO raceDTO)
+        public async Task<RaceDTO> CreateRace(RaceDTO raceDTO)
         {
-            throw new NotImplementedException();
+            Race newRace = new Race()
+            {
+                Id = raceDTO.Id,
+                RaceType = raceDTO.RaceType,
+                StatModifier = raceDTO.StatModifer,
+                Abilities = raceDTO.Abilities
+            };
+
+            _context.Entry(newRace).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+            return raceDTO;
         }
 
         public Task<ClassDTO> GetRace(int Id)
@@ -29,6 +47,10 @@ namespace CustomCharacter.Models.Services
             throw new NotImplementedException();
         }
 
+        public Task AddAbilityToRace(int classId, int skillId)
+        {
+            throw new NotImplementedException();
+        }
         public Task RemoveAbilityFromRace(int classId, int skillId)
         {
             throw new NotImplementedException();
