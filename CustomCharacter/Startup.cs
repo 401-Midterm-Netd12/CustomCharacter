@@ -65,13 +65,12 @@ namespace CustomCharacter
                 options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
             });
 
-            //services.AddTransient<IAbility, AbilityRepository>();
-            //services.AddTransient<ISkill, SkillRepository>();
-            //services.AddTransient<IClass, ClassRepository>();      //ameilia
+            services.AddTransient<IAbility, AbilityRepository>();
+            services.AddTransient<IClass, ClassRepository>();      //ameilia
             services.AddTransient<IRace, RaceRepository>();        //ameilia
             services.AddTransient<IAppUser, IdentityUserService>();
             services.AddTransient<ICharacter, CharacterRepository>();
-            //services.AddTransient<ISkill, SkillRepository>();
+            services.AddTransient<ISkill, SkillRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

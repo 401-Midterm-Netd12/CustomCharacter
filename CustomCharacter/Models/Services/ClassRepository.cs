@@ -54,7 +54,7 @@ namespace CustomCharacter.Models.Services
 
             ClassDTO dtoClass = new ClassDTO()
             {
-                ClassName = result.ClassName,
+                ClassName = result.ClassNames,
                 Id = Id,
                 statModifier = result.StatModifier,
                 Skills = result.ClassSkills.ToList()
@@ -68,7 +68,7 @@ namespace CustomCharacter.Models.Services
             return result
                 .Select(stuff => new ClassDTO
                 {
-                    ClassName = stuff.ClassName,
+                    ClassName = stuff.ClassNames,
                     Id = stuff.Id,
                     statModifier = stuff.StatModifier,
                     Skills = stuff.ClassSkills.ToList()
@@ -86,7 +86,7 @@ namespace CustomCharacter.Models.Services
         {
             var result = await GetClass(classDTO.Id);
             result.Id = classDTO.Id;
-            result.ClassName = classDTO.ClassName;
+            result.ClassNames = classDTO.ClassName;
             result.StatModifier = classDTO.statModifier;
             result.ClassSkills = classDTO.Skills.ToList();
 

@@ -10,7 +10,7 @@ namespace CustomCharacter.Models.API
     {
         public int Id { get; set; }
         public int statModifier { get; set; }
-        public ClassNames ClassName { get; set; }
+        public ClassName ClassName { get; set; }
         public List<ClassSkill> Skills { get; set; }
     }
 }
