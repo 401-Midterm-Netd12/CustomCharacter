@@ -19,7 +19,8 @@ namespace CustomCharacter.Data
         {
             base.OnModelCreating(modelBuilder);
 
-
+            modelBuilder.Entity<ClassSkill>().HasKey(x => new { x.ClassId, x.SkillId });
+            modelBuilder.Entity<RaceAbility>().HasKey(x => new { x.RaceId, x.AbilityId });
 
 
 
@@ -38,6 +39,7 @@ namespace CustomCharacter.Data
         public DbSet<Class> Classes { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<ClassSkill> ClassSkills { get; set; }
 
 
 

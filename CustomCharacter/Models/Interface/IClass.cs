@@ -9,7 +9,7 @@ namespace CustomCharacter.Models.Interface
     public interface IClass
     {
         Task<ClassDTO> CreateClass(ClassDTO classDTO);
-        Task<ClassDTO> GetClass(int Id);
+        Task<Class> GetClass(int Id);
         Task<List<ClassDTO>> GetClasses();
         Task<Class> UpdateClass(ClassDTO classDTO);
         Task DeleteClass(int Id);

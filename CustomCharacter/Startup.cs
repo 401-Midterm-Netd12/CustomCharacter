@@ -38,7 +38,7 @@ namespace CustomCharacter
 
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
-                options.User.RequireUniqueEmail = false;
+                options.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<CustomCharacterContext>();
 
@@ -68,9 +68,10 @@ namespace CustomCharacter
             //services.AddTransient<IAbility, AbilityRepository>();
             //services.AddTransient<ISkill, SkillRepository>();
             //services.AddTransient<IClass, ClassRepository>();      //ameilia
-            //services.AddTransient<IRace, RaceRepository>();        //ameilia
+            services.AddTransient<IRace, RaceRepository>();        //ameilia
             services.AddTransient<IAppUser, IdentityUserService>();
-            //services.AddTransient<ICharacter, CharacterRepository>(); 
+            services.AddTransient<ICharacter, CharacterRepository>();
+            //services.AddTransient<ISkill, SkillRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
