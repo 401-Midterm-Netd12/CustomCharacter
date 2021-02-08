@@ -34,9 +34,18 @@ namespace CustomCharacter.Models.Services
             return raceDTO;
         }
 
-        public Task<ClassDTO> GetRace(int Id)
+        public  async Task<ClassDTO> GetRace(int Id)
         {
-            throw new NotImplementedException();
+            var race = await _context.Races.Include(Race => Race.Abilities).ToListAsync();
+            return race
+            .Select(Race => new RaceDTO
+            {
+                Id = Race.Id,
+                RaceType = Race.RaceType,
+                StatModifer = Race.StatModifier,
+                Abilities = Race.Abilities
+
+             
         }
 
         public Task<List<ClassDTO>> GetRaces()
