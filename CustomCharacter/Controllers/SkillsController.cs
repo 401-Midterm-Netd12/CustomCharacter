@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CustomCharacter.Data;
 using CustomCharacter.Models;
+using CustomCharacter.Models.API;
+using CustomCharacter.Models.Interface;
 
 namespace CustomCharacter.Controllers
 {
@@ -14,25 +16,25 @@ namespace CustomCharacter.Controllers
     [ApiController]
     public class SkillsController : ControllerBase
     {
-        private readonly CustomCharacterContext _context;
+        private readonly ISkill _skill;
 
-        public SkillsController(CustomCharacterContext context)
+        public SkillsController(ISkill skill)
         {
-            _context = context;
+            _skill = skill;
         }
 
         // GET: api/Skills
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Skill>>> GetSkills()
+        public async Task<ActionResult<IEnumerable<SkillDTO>>> GetSkills()
         {
-            return await _context.Skills.ToListAsync();
+            return Ok(await _skill.GetSkills());
         }
 
         // GET: api/Skills/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Skill>> GetSkill(int id)
+        public async Task<ActionResult<SkillDTO>> GetSkill(int id)
         {
-            var skill = await _context.Skills.FindAsync(id);
+            var skill = await _skill.GetSkill(id);
 
             if (skill == null)
             {
@@ -46,65 +48,34 @@ namespace CustomCharacter.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSkill(int id, Skill skill)
+        public async Task<IActionResult> PutSkill(int id, SkillDTO skill)
         {
             if (id != skill.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(skill).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SkillExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updateSkill = await _skill.UpdateSkill(id, skill);
+            return Ok(updateSkill);
         }
 
         // POST: api/Skills
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Skill>> PostSkill(Skill skill)
+        public async Task<ActionResult<Skill>> PostSkill(SkillDTO skill)
         {
-            _context.Skills.Add(skill);
-            await _context.SaveChangesAsync();
+            await _skill.Create(skill);
+            return CreatedAtAction("GetSkill", new { Id = skill.Id, skill });
 
-            return CreatedAtAction("GetSkill", new { id = skill.Id }, skill);
         }
 
         // DELETE: api/Skills/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Skill>> DeleteSkill(int id)
         {
-            var skill = await _context.Skills.FindAsync(id);
-            if (skill == null)
-            {
-                return NotFound();
-            }
-
-            _context.Skills.Remove(skill);
-            await _context.SaveChangesAsync();
-
-            return skill;
-        }
-
-        private bool SkillExists(int id)
-        {
-            return _context.Skills.Any(e => e.Id == id);
+            await _skill.DeleteSkill(id);
+            return NoContent();
         }
     }
 }
