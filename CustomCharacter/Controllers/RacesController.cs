@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CustomCharacter.Data;
 using CustomCharacter.Models;
+using CustomCharacter.Models.Interface;
+using CustomCharacter.Models.API;
 
 namespace CustomCharacter.Controllers
 {
@@ -14,97 +16,54 @@ namespace CustomCharacter.Controllers
     [ApiController]
     public class RacesController : ControllerBase
     {
-        private readonly CustomCharacterContext _context;
+        private readonly IRace _race;
 
-        public RacesController(CustomCharacterContext context)
+        public RacesController(IRace race)
         {
-            _context = context;
+            _race = race;
         }
 
         // GET: api/Races
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Race>>> GetRaces()
+        public async Task<ActionResult<IEnumerable<RaceDTO>>> GetRaces()
         {
-            return await _context.Races.ToListAsync();
+            return Ok(await _race.GetRaces());
         }
 
         // GET: api/Races/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Race>> GetRace(int id)
         {
-            var race = await _context.Races.FindAsync(id);
-
-            if (race == null)
-            {
-                return NotFound();
-            }
-
-            return race;
+            return await _race.GetRace(id);
         }
 
         // PUT: api/Races/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRace(int id, Race race)
-        {
-            if (id != race.Id)
-            {
-                return BadRequest();
-            }
+        public async Task<IActionResult> PutRace(RaceDTO race)
+        { 
 
-            _context.Entry(race).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RaceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updateRace = await _race.UpdateRace(race);
+            return Ok(updateRace);
         }
 
         // POST: api/Races
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Race>> PostRace(Race race)
+        public async Task<ActionResult<Race>> PostRace(RaceDTO race)
         {
-            _context.Races.Add(race);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRace", new { id = race.Id }, race);
+            await _race.CreateRace(race);
+            return CreatedAtAction("GetRace", new { Id = race.Id, race });
         }
 
         // DELETE: api/Races/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Race>> DeleteRace(int id)
         {
-            var race = await _context.Races.FindAsync(id);
-            if (race == null)
-            {
-                return NotFound();
-            }
-
-            _context.Races.Remove(race);
-            await _context.SaveChangesAsync();
-
-            return race;
-        }
-
-        private bool RaceExists(int id)
-        {
-            return _context.Races.Any(e => e.Id == id);
+            await _race.DeleteRace(id);
+            return NoContent();
         }
     }
 }
