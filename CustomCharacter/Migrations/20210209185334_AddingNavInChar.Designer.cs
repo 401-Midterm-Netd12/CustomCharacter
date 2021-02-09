@@ -4,100 +4,22 @@ using CustomCharacter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CustomCharacter.Migrations
 {
     [DbContext(typeof(CustomCharacterContext))]
-    partial class CustomCharacterContextModelSnapshot : ModelSnapshot
+    [Migration("20210209185334_AddingNavInChar")]
+    partial class AddingNavInChar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CustomCharacter.Models.API.AbilityDTO", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Desc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AbilityDTO");
-                });
-
-            modelBuilder.Entity("CustomCharacter.Models.API.ClassDTO", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClassName")
-                        .HasColumnType("int");
-
-                    b.Property<int>("statModifier")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ClassDTO");
-                });
-
-            modelBuilder.Entity("CustomCharacter.Models.API.RaceDTO", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("RaceType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StatModifer")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RaceDTO");
-                });
-
-            modelBuilder.Entity("CustomCharacter.Models.API.SkillDTO", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ClassSkillClassId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClassSkillSkillId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Desc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassSkillClassId", "ClassSkillSkillId");
-
-                    b.ToTable("SkillDTO");
-                });
 
             modelBuilder.Entity("CustomCharacter.Models.Ability", b =>
                 {
@@ -118,15 +40,6 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Abilities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Desc = "Deadly stank breath.",
-                            Name = "Beer Breath",
-                            RaceId = 1
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.AppUser", b =>
@@ -222,8 +135,8 @@ namespace CustomCharacter.Migrations
                     b.Property<int>("Strength")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -234,19 +147,6 @@ namespace CustomCharacter.Migrations
                     b.HasIndex("RaceId");
 
                     b.ToTable("Characters");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClassId = 1,
-                            Dex = 2,
-                            HP = 10,
-                            Name = "Bob's guy",
-                            RaceId = 1,
-                            Strength = 10,
-                            UserId = "fedeed64-6693-4508-8e0e-ec41c9400da6"
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Class", b =>
@@ -265,14 +165,6 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Classes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClassNames = 1,
-                            StatModifier = 2
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.ClassSkill", b =>
@@ -283,21 +175,9 @@ namespace CustomCharacter.Migrations
                     b.Property<int>("SkillId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ClassNavId")
-                        .HasColumnType("int");
-
                     b.HasKey("ClassId", "SkillId");
 
-                    b.HasIndex("ClassNavId");
-
                     b.ToTable("ClassSkills");
-
-                    b.HasData(
-                        new
-                        {
-                            ClassId = 1,
-                            SkillId = 1
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Race", b =>
@@ -316,14 +196,6 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Races");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            RaceType = 3,
-                            StatModifier = 2
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.RaceAbility", b =>
@@ -334,28 +206,9 @@ namespace CustomCharacter.Migrations
                     b.Property<int>("AbilityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AbilityInRaceId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RaceInRaceId")
-                        .HasColumnType("int");
-
                     b.HasKey("RaceId", "AbilityId");
 
-                    b.HasIndex("AbilityId");
-
-                    b.HasIndex("AbilityInRaceId");
-
-                    b.HasIndex("RaceInRaceId");
-
                     b.ToTable("RaceAbilities");
-
-                    b.HasData(
-                        new
-                        {
-                            RaceId = 1,
-                            AbilityId = 1
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Skill", b =>
@@ -377,15 +230,6 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClassId = 1,
-                            Desc = "Can drunkenly dodge attacks.",
-                            Name = "Swaggered walk"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -586,13 +430,6 @@ namespace CustomCharacter.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CustomCharacter.Models.API.SkillDTO", b =>
-                {
-                    b.HasOne("CustomCharacter.Models.ClassSkill", null)
-                        .WithMany("SkillNav")
-                        .HasForeignKey("ClassSkillClassId", "ClassSkillSkillId");
-                });
-
             modelBuilder.Entity("CustomCharacter.Models.Character", b =>
                 {
                     b.HasOne("CustomCharacter.Models.AppUser", "CharAppUser")
@@ -619,33 +456,15 @@ namespace CustomCharacter.Migrations
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CustomCharacter.Models.API.ClassDTO", "ClassNav")
-                        .WithMany("Skills")
-                        .HasForeignKey("ClassNavId");
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.RaceAbility", b =>
                 {
-                    b.HasOne("CustomCharacter.Models.Ability", null)
-                        .WithMany("AbilityList")
-                        .HasForeignKey("AbilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CustomCharacter.Models.API.AbilityDTO", "AbilityInRace")
-                        .WithMany("Abilities")
-                        .HasForeignKey("AbilityInRaceId");
-
                     b.HasOne("CustomCharacter.Models.Race", null)
                         .WithMany("Abilities")
                         .HasForeignKey("RaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CustomCharacter.Models.API.RaceDTO", "RaceInRace")
-                        .WithMany("DTOAbilities")
-                        .HasForeignKey("RaceInRaceId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

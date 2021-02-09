@@ -9,9 +9,8 @@ namespace CustomCharacter.Models
     {
         public int Id { get; set; }
         public int RaceId { get; set; }
-
-
         public string Name { get; set; }
         public string Desc { get; set; }
+        public List<RaceAbility> AbilityList { get; set; }
     }
 }
