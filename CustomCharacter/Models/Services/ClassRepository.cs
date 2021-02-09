@@ -27,7 +27,7 @@ namespace CustomCharacter.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ClassDTO> CreateClass(ClassDTO classDTO)
+        public async Task<Class> CreateClass(ClassDTO classDTO)
         {
             Class newClass = new Class()
             {
@@ -37,7 +37,7 @@ namespace CustomCharacter.Models.Services
             };
             _context.Entry(newClass).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            return classDTO;
+            return newClass;
         }
 
         public async Task DeleteClass(int Id)
@@ -50,7 +50,7 @@ namespace CustomCharacter.Models.Services
 
         public async Task<Class> GetClass(int Id)
         {
-            var result = await _context.Classes.Include(x => x.Id == Id).FirstOrDefaultAsync();
+            var result = await _context.Classes.Where(x => x.Id == Id).FirstOrDefaultAsync();
 
             ClassDTO dtoClass = new ClassDTO()
             {

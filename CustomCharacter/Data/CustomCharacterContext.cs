@@ -22,7 +22,7 @@ namespace CustomCharacter.Data
             modelBuilder.Entity<ClassSkill>().HasKey(x => new { x.ClassId, x.SkillId });
             modelBuilder.Entity<RaceAbility>().HasKey(x => new { x.RaceId, x.AbilityId });
 
-
+            //add some data
 
 
             seedRole(modelBuilder, "DungeonMaster", "create", "update", "delete");
@@ -31,15 +31,12 @@ namespace CustomCharacter.Data
         }
 
         public DbSet<Ability> Abilities { get; set; }
+        public DbSet<RaceAbility> RaceAbilities { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<ClassSkill> ClassSkills { get; set; }
         public DbSet<Skill> Skills { get; set; }
-
-
-        public DbSet<RaceAbility> RaceAbilities { get; set; }
-
 
 
 

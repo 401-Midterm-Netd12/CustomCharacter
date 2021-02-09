@@ -8,7 +8,7 @@ namespace CustomCharacter.Models.Interface
 {
     public interface IRace
     {
-        Task<RaceDTO> CreateRace(RaceDTO raceDTO);
+        Task<Race> CreateRace(RaceDTO raceDTO);
         Task<Race> GetRace(int Id);
         Task<List<RaceDTO>> GetRaces();
         Task<Race> UpdateRace(RaceDTO raceDTO);
