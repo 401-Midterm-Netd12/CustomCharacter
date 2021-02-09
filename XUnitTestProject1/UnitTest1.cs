@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 
-namespace TestCharacter
+namespace XUnitTestProject1
 {
-    public class UnitTest1 : Mock
+    public class UnitTest1
     {
         [Fact]
         public void Test1()
