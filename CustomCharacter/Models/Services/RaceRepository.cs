@@ -26,7 +26,7 @@ namespace CustomCharacter.Models.Services
                 Id = raceDTO.Id,
                 RaceType = raceDTO.RaceType,
                 StatModifier = raceDTO.StatModifer,
-                Abilities = raceDTO.Abilities.ToList()
+                Abilities = raceDTO.DTOAbilities.ToList()
             };
 
             _context.Entry(newRace).State = EntityState.Added;
@@ -43,7 +43,7 @@ namespace CustomCharacter.Models.Services
                 Id = Id,
                 RaceType = race.RaceType,
                 StatModifer = race.StatModifier,
-                Abilities = race.Abilities.ToList()
+                DTOAbilities = race.Abilities.ToList()
 
             };
             return race;
@@ -58,7 +58,7 @@ namespace CustomCharacter.Models.Services
                 Id = Race.Id,
                 RaceType = Race.RaceType,
                 StatModifer = Race.StatModifier,
-                Abilities = Race.Abilities.ToList()
+                DTOAbilities = Race.Abilities.ToList()
 
             }).ToList();
         }
@@ -90,7 +90,7 @@ namespace CustomCharacter.Models.Services
             race.Id = raceDTO.Id;
             race.RaceType = raceDTO.RaceType;
             race.StatModifier = raceDTO.StatModifer;
-            race.Abilities = raceDTO.Abilities.ToList();
+            race.Abilities = raceDTO.DTOAbilities.ToList();
 
             _context.Entry(race).State = EntityState.Modified;
             await _context.SaveChangesAsync();

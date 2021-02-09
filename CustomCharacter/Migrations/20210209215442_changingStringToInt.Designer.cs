@@ -4,14 +4,16 @@ using CustomCharacter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CustomCharacter.Migrations
 {
     [DbContext(typeof(CustomCharacterContext))]
-    partial class CustomCharacterContextModelSnapshot : ModelSnapshot
+    [Migration("20210209215442_changingStringToInt")]
+    partial class changingStringToInt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,6 +194,20 @@ namespace CustomCharacter.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "304b3ce5-4844-4907-bbc5-53b4257913f9",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "8553b784-fb32-45b1-b179-a61d2b6a9033",
+                            TwoFactorEnabled = false,
+                            UserName = "Bob"
+                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Character", b =>
@@ -222,8 +238,8 @@ namespace CustomCharacter.Migrations
                     b.Property<int>("Strength")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -245,7 +261,7 @@ namespace CustomCharacter.Migrations
                             Name = "Bob's guy",
                             RaceId = 1,
                             Strength = 10,
-                            UserId = "fedeed64-6693-4508-8e0e-ec41c9400da6"
+                            UserId = 1
                         });
                 });
 
