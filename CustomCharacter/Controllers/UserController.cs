@@ -14,13 +14,15 @@ namespace CustomCharacter.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IAppUser Userservice;
-        public UserController(IAppUser _context)
+        private readonly IUserService Userservice;
+        public UserController(IUserService _context)
         {
             Userservice = _context;
         }
 
         [HttpPost("Register")]
+
+        //this.ModelState ------- comes directly in from MVC / Models
 
         //Either we get a good user OR we throw a modelstate error.
         public async Task<ActionResult<AppUserDTO>> Register(RegisterUser data)
@@ -47,6 +49,7 @@ namespace CustomCharacter.Controllers
             return Unauthorized();
         }
 
+        //[Authorize(Policy = "create")]
         [HttpGet("me")]
         public async Task<ActionResult<AppUserDTO>> Me()
         {

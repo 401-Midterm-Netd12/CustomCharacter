@@ -25,11 +25,6 @@ namespace CustomCharacter.Data
 
 
 
-
-
-
-
-
             seedRole(modelBuilder, "DungeonMaster", "create", "update", "delete");
             seedRole(modelBuilder, "Creator", "create", "update");
             seedRole(modelBuilder, "Player", "create");

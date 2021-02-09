@@ -53,7 +53,6 @@ namespace CustomCharacter
             })
                 .AddJwtBearer(options =>
                 {
-                    //TODO: Write GetValidationParams
                     options.TokenValidationParameters = JwtTokenService.GetValidationParams(Configuration);
                 });
 
@@ -68,7 +67,7 @@ namespace CustomCharacter
             services.AddTransient<IAbility, AbilityRepository>();
             services.AddTransient<IClass, ClassRepository>();      //ameilia
             services.AddTransient<IRace, RaceRepository>();        //ameilia
-            services.AddTransient<IAppUser, IdentityUserService>();
+            services.AddTransient<IUserService, IdentityUserService>();
             services.AddTransient<ICharacter, CharacterRepository>();
             services.AddTransient<ISkill, SkillRepository>();
 
@@ -84,6 +83,7 @@ namespace CustomCharacter
                     Version = "v1"
                 });
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,7 +107,7 @@ namespace CustomCharacter
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/api/v1/swagger.json", "Custom Characters");
-                options.RoutePrefix = "swagger";
+                options.RoutePrefix = "docs";
             });
 
             //==================================================================
@@ -117,6 +117,8 @@ namespace CustomCharacter
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
+                endpoints.MapControllers();
+
             });
         }
     }
