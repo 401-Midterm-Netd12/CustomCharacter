@@ -24,7 +24,6 @@ namespace CustomCharacter.Models.Services
             Ability ability = new Ability()
             {
                 Id = AbilityDTO.Id,
-                RaceId = AbilityDTO.Id,
                 Name = AbilityDTO.Name,
                 Desc = AbilityDTO.Desc
             };
@@ -66,8 +65,7 @@ namespace CustomCharacter.Models.Services
             {
                 Id = AbilityDTO.Id,
                 Name = AbilityDTO.Name,
-                Desc = AbilityDTO.Desc,
-                RaceId = AbilityDTO.RaceId
+                Desc = AbilityDTO.Desc
             };
             _context.Entry(ability).State = EntityState.Modified;
             await _context.SaveChangesAsync();
