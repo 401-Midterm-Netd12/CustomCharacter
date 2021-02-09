@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.Services
 {
-    public class IdentityUserService : IAppUser
+    public class IdentityUserService : IUserService
     {
         private UserManager<AppUser> UserManager;
         private JwtTokenService tokenService;

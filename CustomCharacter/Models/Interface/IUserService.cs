@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CustomCharacter.Models.Interface
 {
-    public interface IAppUser
+    public interface IUserService
     {
         /// <summary>
         /// Registers a new user

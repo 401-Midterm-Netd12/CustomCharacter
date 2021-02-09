@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CustomCharacter.Data;
 using CustomCharacter.Models;
+using CustomCharacter.Models.Interface;
+using CustomCharacter.Models.API;
 
 namespace CustomCharacter.Controllers
 {
@@ -14,25 +16,25 @@ namespace CustomCharacter.Controllers
     [ApiController]
     public class AbilitiesController : ControllerBase
     {
-        private readonly CustomCharacterContext _context;
+        private readonly IAbility _context;
 
-        public AbilitiesController(CustomCharacterContext context)
+        public AbilitiesController(IAbility context)
         {
             _context = context;
         }
 
         // GET: api/Abilities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ability>>> GetAbilities()
+        public async Task<ActionResult<IEnumerable<AbilityDTO>>> GetAbilities()
         {
-            return await _context.Abilities.ToListAsync();
+            return Ok(await _context.GetAbilities());
         }
 
         // GET: api/Abilities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ability>> GetAbility(int id)
+        public async Task<ActionResult<AbilityDTO>> GetAbility(int id)
         {
-            var ability = await _context.Abilities.FindAsync(id);
+            AbilityDTO ability = await _context.GetAbility(id);
 
             if (ability == null)
             {
@@ -46,65 +48,33 @@ namespace CustomCharacter.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAbility(int id, Ability ability)
+        public async Task<IActionResult> PutAbility(int id, AbilityDTO ability)
         {
             if (id != ability.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(ability).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AbilityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updateability = await _context.UpdateAbilities(ability);
+            return Ok(updateability);
         }
 
         // POST: api/Abilities
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Ability>> PostAbility(Ability ability)
+        public async Task<ActionResult<Ability>> PostAbility(AbilityDTO ability)
         {
-            _context.Abilities.Add(ability);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAbility", new { id = ability.Id }, ability);
+            await _context.Create(ability);
+            return CreatedAtAction("GetAbilities", new { id = ability.Id }, ability);
         }
 
         // DELETE: api/Abilities/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Ability>> DeleteAbility(int id)
         {
-            var ability = await _context.Abilities.FindAsync(id);
-            if (ability == null)
-            {
-                return NotFound();
-            }
-
-            _context.Abilities.Remove(ability);
-            await _context.SaveChangesAsync();
-
-            return ability;
-        }
-
-        private bool AbilityExists(int id)
-        {
-            return _context.Abilities.Any(e => e.Id == id);
+            await _context.DeleteAbility(id);
+            return NoContent();
         }
     }
 }

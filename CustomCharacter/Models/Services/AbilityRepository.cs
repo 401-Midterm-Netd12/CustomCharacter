@@ -60,7 +60,7 @@ namespace CustomCharacter.Models.Services
         }
 
 
-        public async Task<Ability> UpdateAbilities(int Id, AbilityDTO AbilityDTO)
+        public async Task<Ability> UpdateAbilities(AbilityDTO AbilityDTO)
         {
             Ability ability = new Ability()
             {
