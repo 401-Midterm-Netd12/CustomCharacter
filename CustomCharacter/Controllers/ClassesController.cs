@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CustomCharacter.Data;
 using CustomCharacter.Models;
+using CustomCharacter.Models.Interface;
+using CustomCharacter.Models.API;
 
 namespace CustomCharacter.Controllers
 {
@@ -14,97 +16,61 @@ namespace CustomCharacter.Controllers
     [ApiController]
     public class ClassesController : ControllerBase
     {
-        private readonly CustomCharacterContext _context;
+        private readonly IClass _class;
 
-        public ClassesController(CustomCharacterContext context)
+        public ClassesController(IClass classData)
         {
-            _context = context;
+            _class = classData;
         }
 
         // GET: api/Classes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Class>>> GetClasses()
         {
-            return await _context.Classes.ToListAsync();
+            return Ok(await _class.GetClasses());
         }
 
         // GET: api/Classes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Class>> GetClass(int id)
         {
-            var @class = await _context.Classes.FindAsync(id);
+            Class classObj = await _class.GetClass(id);
 
-            if (@class == null)
+            if (classObj == null)
             {
                 return NotFound();
             }
 
-            return @class;
+            return classObj;
         }
 
         // PUT: api/Classes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClass(int id, Class @class)
+        public async Task<IActionResult> PutClass(ClassDTO classDTO)
         {
-            if (id != @class.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(@class).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClassExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updatedClass = await _class.UpdateClass(classDTO);
+            return Ok(updatedClass);
         }
 
         // POST: api/Classes
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Class>> PostClass(Class @class)
+        public async Task<ActionResult<Class>> PostClass(ClassDTO classDTO)
         {
-            _context.Classes.Add(@class);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetClass", new { id = @class.Id }, @class);
+            await _class.CreateClass(classDTO);
+            return CreatedAtAction("GetRooms", new { id = classDTO.Id }, classDTO);
         }
 
         // DELETE: api/Classes/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Class>> DeleteClass(int id)
         {
-            var @class = await _context.Classes.FindAsync(id);
-            if (@class == null)
-            {
-                return NotFound();
-            }
-
-            _context.Classes.Remove(@class);
-            await _context.SaveChangesAsync();
-
-            return @class;
+            await _class.DeleteClass(id);
+            return NoContent();
         }
 
-        private bool ClassExists(int id)
-        {
-            return _context.Classes.Any(e => e.Id == id);
-        }
     }
 }
