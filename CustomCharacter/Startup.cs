@@ -107,18 +107,13 @@ namespace CustomCharacter
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/api/v1/swagger.json", "Custom Characters");
-                options.RoutePrefix = "docs";
+                options.RoutePrefix = "";
             });
 
             //==================================================================
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
                 endpoints.MapControllers();
-
             });
         }
     }
