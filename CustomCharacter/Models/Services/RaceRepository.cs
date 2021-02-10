@@ -25,8 +25,7 @@ namespace CustomCharacter.Models.Services
             {
                 Id = raceDTO.Id,
                 RaceType = raceDTO.RaceType,
-                StatModifier = raceDTO.StatModifer,
-                Abilities = raceDTO.DTOAbilities.ToList()
+                StatModifier = raceDTO.StatModifer
             };
 
             _context.Entry(newRace).State = EntityState.Added;

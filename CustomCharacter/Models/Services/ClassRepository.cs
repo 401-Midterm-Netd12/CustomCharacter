@@ -32,8 +32,8 @@ namespace CustomCharacter.Models.Services
             Class newClass = new Class()
             {
                 Id = classDTO.Id,
-                ClassSkills = classDTO.Skills.ToList(),
-                StatModifier = classDTO.statModifier
+                StatModifier = classDTO.statModifier,
+                ClassName = classDTO.ClassName
             };
             _context.Entry(newClass).State = EntityState.Added;
             await _context.SaveChangesAsync();
@@ -54,7 +54,7 @@ namespace CustomCharacter.Models.Services
 
             ClassDTO dtoClass = new ClassDTO()
             {
-                ClassName = result.ClassNames,
+                ClassName = result.ClassName,
                 Id = Id,
                 statModifier = result.StatModifier,
                 Skills = result.ClassSkills.ToList()
@@ -68,7 +68,7 @@ namespace CustomCharacter.Models.Services
             return result
                 .Select(stuff => new ClassDTO
                 {
-                    ClassName = stuff.ClassNames,
+                    ClassName = stuff.ClassName,
                     Id = stuff.Id,
                     statModifier = stuff.StatModifier,
                     Skills = stuff.ClassSkills.ToList()
@@ -86,7 +86,7 @@ namespace CustomCharacter.Models.Services
         {
             var result = await GetClass(classDTO.Id);
             result.Id = classDTO.Id;
-            result.ClassNames = classDTO.ClassName;
+            result.ClassName = classDTO.ClassName;
             result.StatModifier = classDTO.statModifier;
             result.ClassSkills = classDTO.Skills.ToList();
 

@@ -76,7 +76,7 @@ namespace TestCharacter
             {
                 //Id = race.Id,
                 DTOAbilities = new List<RaceAbility> { },
-                RaceType = (Race.RaceTypes) 1,
+                RaceType = "Human",
                 StatModifer = 1,
             };
 
@@ -97,7 +97,7 @@ namespace TestCharacter
             ClassDTO dtoclass = new ClassDTO
             {
                 Id = newClass.Id,
-                ClassName = (Class.ClassName)1,
+                ClassName = "Knight",
                 statModifier = 1,
                 Skills = new List<ClassSkill> { }
             };
@@ -120,7 +120,7 @@ namespace TestCharacter
             ClassDTO dtoclass = new ClassDTO
             {
                 Id = newClass.Id,
-                ClassName = (Class.ClassName)1,
+                ClassName = "Unicorn",
                 statModifier = 1,
                 Skills = new List<ClassSkill> { }
             };
@@ -146,7 +146,7 @@ namespace TestCharacter
             RaceDTO dtorace = new RaceDTO
             {
                 Id = race.Id,
-                RaceType = (Race.RaceTypes)1,
+                RaceType = "Hobit",
                 StatModifer = 1,
                 DTOAbilities = new List<RaceAbility> { },
             };

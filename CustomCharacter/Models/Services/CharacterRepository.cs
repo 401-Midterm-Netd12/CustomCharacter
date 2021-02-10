@@ -53,7 +53,7 @@ namespace CustomCharacter.Models.Services
                                         {
                                             Id = c.CharClass.Id,
                                             statModifier = c.CharClass.StatModifier,
-                                            ClassName = c.CharClass.ClassNames,
+                                            ClassName = c.CharClass.ClassName,
                                             Skills = c.CharClass.ClassSkills
                                                                 .Select(cs => new ClassSkill()
                                                                 {
@@ -127,7 +127,7 @@ namespace CustomCharacter.Models.Services
                                         {
                                             Id = c.CharClass.Id,
                                             statModifier = c.CharClass.StatModifier,
-                                            ClassName = c.CharClass.ClassNames,
+                                            ClassName = c.CharClass.ClassName,
                                             Skills = c.CharClass.ClassSkills
                                                                 .Select(cs => new ClassSkill()
                                                                 {

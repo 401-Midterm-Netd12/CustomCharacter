@@ -61,7 +61,7 @@ namespace CustomCharacter.Controllers
         public async Task<ActionResult<Class>> PostClass(ClassDTO classDTO)
         {
             await _class.CreateClass(classDTO);
-            return CreatedAtAction("GetRooms", new { id = classDTO.Id }, classDTO);
+            return CreatedAtAction("GetClasses", new { id = classDTO.Id }, classDTO);
         }
 
         // DELETE: api/Classes/5

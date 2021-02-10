@@ -134,7 +134,7 @@ namespace TestCharacter
             var race = new Race
             {
                 Id = 3,
-                RaceType = (Race.RaceTypes)1,
+                RaceType = "Org",
                 Abilities = new List<RaceAbility> { }
             };
             _db.Races.Add(race);
@@ -151,7 +151,7 @@ namespace TestCharacter
             {
                 //Id = 88,
                 StatModifier = 2,
-                ClassNames = (Class.ClassName)2,
+                //ClassName = (Class.ClassName)2,
                 ClassSkills = new List<ClassSkill> { }
             };
             _db.Classes.Add(testClass);
