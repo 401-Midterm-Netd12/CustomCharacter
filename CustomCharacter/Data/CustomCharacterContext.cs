@@ -46,13 +46,13 @@ namespace CustomCharacter.Data
             modelBuilder.Entity<Race>().HasData(new Race
             {
                 Id = 1,
-                RaceType = RaceTypes.Human,
+                RaceType = "Human",
                 StatModifier = 2
             });
             modelBuilder.Entity<Class>().HasData(new Class
             {
                 Id = 1,
-                ClassNames = ClassName.Barbarian,
+                ClassNames = "Barbarian",
                 StatModifier = 2
             });
             modelBuilder.Entity<RaceAbility>().HasData(new RaceAbility

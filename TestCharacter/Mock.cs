@@ -33,37 +33,26 @@ namespace TestCharacter
         }
 
         //Since our Character creation uses a DTO but our Characters expects non-dto I made both for now.
-        protected async Task<CharacterDTO> CreateandSaveCharacter()
+        protected async Task<Character> CreateandSaveCharacter()
         {
             var testChar = new Character
             {
-                Name = "Leonard",
+                Id = 1,
+                UserId = "fedeed64-6693-4508-8e0e-ec41c9400da6",
                 RaceId = 1,
                 ClassId = 1,
-                UserId = "1",
-                Id = 1,
-                Dex = 55,
-                HP = 60,
-                Strength = 45
+                Name = "Bob's guy",
+                HP = 10,
+                Strength = 10,
+                Dex = 2
             };
             _db.Characters.Add(testChar);
 
             await _db.SaveChangesAsync();
+            _db.Entry(testChar).State = EntityState.Detached;
 
             Assert.NotEqual(0, testChar.HP);
-
-            var newChar = new CharacterDTO
-            {
-                Name = testChar.Name,
-                RaceId = testChar.RaceId,
-                ClassId = testChar.ClassId,
-                UserId = testChar.UserId,
-                Id = testChar.Id,
-                Dex = testChar.Dex,
-                HP = testChar.HP,
-                Strength = testChar.Strength
-            };
-            return newChar;
+            return testChar;
         }
 
         protected async Task<Ability> CreateandSaveAbility()
@@ -103,8 +92,8 @@ namespace TestCharacter
             var skill = new Skill
             {
                 Desc = "You can now see in the night!",
-                //Id = 22,
-                Name = "NightSight"
+                Name = "NightSight",
+                ClassId = 5
             };
             _db.Skills.Add(skill);
             await _db.SaveChangesAsync();
@@ -119,7 +108,9 @@ namespace TestCharacter
             var classSkill = new ClassSkill
             {
                 ClassId = 88,
-                SkillId = 22
+                SkillId = 22,
+                ClassNav = new Class { },
+                SkillNav = new Skill { }
             };
             _db.ClassSkills.Add(classSkill);
             await _db.SaveChangesAsync();
@@ -133,15 +124,16 @@ namespace TestCharacter
         {
             var race = new Race
             {
-                Id = 3,
-                RaceType = (Race.RaceTypes)1,
-                Abilities = new List<RaceAbility> { }
+                //Id = 3,
+                RaceType = "Monke",
+                Abilities = new List<RaceAbility> { },
+                StatModifier = 3
             };
             _db.Races.Add(race);
             await _db.SaveChangesAsync();
             _db.Entry(race).State = EntityState.Deleted;
 
-            Assert.NotEqual(0, race.Id);
+            Assert.NotNull(race);
             return race;
         }
 
@@ -149,9 +141,9 @@ namespace TestCharacter
         {
             var testClass = new Class
             {
-                //Id = 88,
+                Id = 88,
                 StatModifier = 2,
-                ClassNames = (Class.ClassName)2,
+                ClassNames = "Paladin",
                 ClassSkills = new List<ClassSkill> { }
             };
             _db.Classes.Add(testClass);

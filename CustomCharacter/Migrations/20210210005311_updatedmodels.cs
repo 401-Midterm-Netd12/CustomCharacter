@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CustomCharacter.Migrations
 {
-    public partial class addcharacter : Migration
+    public partial class updatedmodels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,7 @@ namespace CustomCharacter.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StatModifier = table.Column<int>(nullable: false),
-                    ClassNames = table.Column<int>(nullable: false)
+                    ClassNames = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,7 +82,7 @@ namespace CustomCharacter.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StatModifier = table.Column<int>(nullable: false),
-                    RaceType = table.Column<int>(nullable: false)
+                    RaceType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -314,12 +314,12 @@ namespace CustomCharacter.Migrations
             migrationBuilder.InsertData(
                 table: "Classes",
                 columns: new[] { "Id", "ClassNames", "StatModifier" },
-                values: new object[] { 1, 1, 2 });
+                values: new object[] { 1, "Barbarian", 2 });
 
             migrationBuilder.InsertData(
                 table: "Races",
                 columns: new[] { "Id", "RaceType", "StatModifier" },
-                values: new object[] { 1, 3, 2 });
+                values: new object[] { 1, "Human", 2 });
 
             migrationBuilder.InsertData(
                 table: "Skills",

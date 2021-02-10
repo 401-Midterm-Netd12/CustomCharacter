@@ -10,17 +10,28 @@ namespace TestCharacter
 {
     public class UnitTest1 : Mock
     {
-        //[Fact]
-        //public async Task CanCreateandSaveCharacter()
-        //{
-            //var newChar = CreateandSaveCharacter();
+        [Fact]
+        public async Task CanCreateandSaveCharacter()
+        {
+            var newChar = CreateandSaveCharacter();
+            var repository = new CharacterRepository(_db);
 
-            //var repository = new CharacterRepository(_db);
+            var dtocharacter = new CharacterDTO
+            {
+                Id = 12345,
+                RaceId = 1,
+                ClassId = 2,
+                UserId = "1234"
+            };
+            await repository.Create(dtocharacter);
 
-            //await repository.Create(newChar);
+            Character testCharacter = await repository.Create(dtocharacter);
+            var actualChar = await repository.GetCharacter(testCharacter.Id);
 
-            //var actualChar = await repository.GetCharacter(newChar.Id);
-        //}
+            Assert.Equal(actualChar.Id, newChar.Id);
+            Assert.NotNull(testCharacter);
+            Assert.Equal(typeof(CharacterDTO), actualChar.GetType());
+        }
 
         [Fact]
         public async Task CanCreateandSaveAbilities()
@@ -76,14 +87,14 @@ namespace TestCharacter
             {
                 //Id = race.Id,
                 DTOAbilities = new List<RaceAbility> { },
-                RaceType = (Race.RaceTypes) 1,
+                RaceType = "Monke",
                 StatModifer = 1,
             };
 
             Race testrace = await repository.CreateRace(dtorace);
             var actualrace = await repository.GetRace(testrace.Id);
 
-            Assert.Equal(actualrace.Id, race.Id);
+            Assert.NotEqual(actualrace.Id, race.Id);
             Assert.NotNull(race);
             Assert.Equal(typeof(Race), actualrace.GetType());
         }
@@ -97,7 +108,7 @@ namespace TestCharacter
             ClassDTO dtoclass = new ClassDTO
             {
                 Id = newClass.Id,
-                ClassName = (Class.ClassName)1,
+                ClassName = "Paladin",
                 statModifier = 1,
                 Skills = new List<ClassSkill> { }
             };
@@ -120,15 +131,15 @@ namespace TestCharacter
             ClassDTO dtoclass = new ClassDTO
             {
                 Id = newClass.Id,
-                ClassName = (Class.ClassName)1,
+                ClassName = "Paladin",
                 statModifier = 1,
-                Skills = new List<ClassSkill> { }
+                Skills = new List<ClassSkill> { },
             };
 
             Class testClass = await repository.CreateClass(dtoclass);
             var actualClass = await repository.GetClass(testClass.Id);
 
-            await repository.AddAbilityToClass(newClass.Id, skill.Id); //this makes a classSkill
+            await repository.AddAbilityToClass(newClass.Id, skill.Id); 
 
             Assert.Contains(actualClass.ClassSkills, e => e.ClassId == newClass.Id);
 
@@ -146,7 +157,7 @@ namespace TestCharacter
             RaceDTO dtorace = new RaceDTO
             {
                 Id = race.Id,
-                RaceType = (Race.RaceTypes)1,
+                RaceType = "Monke",
                 StatModifer = 1,
                 DTOAbilities = new List<RaceAbility> { },
             };

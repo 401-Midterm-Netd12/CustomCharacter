@@ -176,8 +176,8 @@ namespace CustomCharacter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClassNames")
-                        .HasColumnType("int");
+                    b.Property<string>("ClassNames")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatModifier")
                         .HasColumnType("int");
@@ -190,7 +190,7 @@ namespace CustomCharacter.Migrations
                         new
                         {
                             Id = 1,
-                            ClassNames = 1,
+                            ClassNames = "Barbarian",
                             StatModifier = 2
                         });
                 });
@@ -224,8 +224,8 @@ namespace CustomCharacter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("RaceType")
-                        .HasColumnType("int");
+                    b.Property<string>("RaceType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatModifier")
                         .HasColumnType("int");
@@ -238,7 +238,7 @@ namespace CustomCharacter.Migrations
                         new
                         {
                             Id = 1,
-                            RaceType = 3,
+                            RaceType = "Human",
                             StatModifier = 2
                         });
                 });
