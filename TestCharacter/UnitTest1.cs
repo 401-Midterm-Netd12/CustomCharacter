@@ -74,10 +74,10 @@ namespace TestCharacter
 
             RaceDTO dtorace = new RaceDTO
             {
-                Id = race.Id,
-                Abilities = new List<RaceAbility> { },
+                //Id = race.Id,
+                DTOAbilities = new List<RaceAbility> { },
                 RaceType = (Race.RaceTypes) 1,
-                StatModifer = 1
+                StatModifer = 1,
             };
 
             Race testrace = await repository.CreateRace(dtorace);
@@ -148,7 +148,7 @@ namespace TestCharacter
                 Id = race.Id,
                 RaceType = (Race.RaceTypes)1,
                 StatModifer = 1,
-                Abilities = new List<RaceAbility> { }
+                DTOAbilities = new List<RaceAbility> { },
             };
 
             Race testrace = await repository.CreateRace(dtorace);
