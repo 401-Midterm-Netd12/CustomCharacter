@@ -40,7 +40,7 @@ namespace TestCharacter
                 Name = "Leonard",
                 RaceId = 1,
                 ClassId = 1,
-                UserId = 1,
+                UserId = "1",
                 Id = 1,
                 Dex = 55,
                 HP = 60,
@@ -86,7 +86,9 @@ namespace TestCharacter
             var Raceability = new RaceAbility
             {
                 AbilityId = 6,
-                RaceId = 6
+                RaceId = 6,
+                AbilityInRace = new Ability { },
+                RaceInRace = new Race { }
             };
             _db.RaceAbilities.Add(Raceability);
             await _db.SaveChangesAsync();
