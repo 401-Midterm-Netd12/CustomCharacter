@@ -66,7 +66,7 @@ namespace CustomCharacter.Controllers
         public async Task<ActionResult<Skill>> PostSkill(SkillDTO skill)
         {
             await _skill.Create(skill);
-            return CreatedAtAction("GetSkill", new { Id = skill.Id, skill });
+            return CreatedAtAction("GetSkill", new { Id = skill.Id }, skill);
 
         }
 

@@ -9,7 +9,7 @@ namespace CustomCharacter.Models.API
     public class RaceDTO
     {
         public int Id { get; set; }
-        public RaceTypes RaceType { get; set; }
+        public string RaceType { get; set; }
 
         public int StatModifer { get; set; }
         public List<RaceAbility> DTOAbilities { get; set; }

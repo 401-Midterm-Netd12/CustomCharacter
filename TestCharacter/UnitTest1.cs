@@ -76,7 +76,7 @@ namespace TestCharacter
             {
                 //Id = race.Id,
                 DTOAbilities = new List<RaceAbility> { },
-                RaceType = (Race.RaceTypes) 1,
+                RaceType = "Human",
                 StatModifer = 1,
             };
 
@@ -97,8 +97,8 @@ namespace TestCharacter
             ClassDTO dtoclass = new ClassDTO
             {
                 Id = newClass.Id,
-                ClassName = (Class.ClassName)1,
-                statModifier = 1,
+                ClassName = "Knight",
+                StatModifier = 1,
                 Skills = new List<ClassSkill> { }
             };
 
@@ -120,8 +120,8 @@ namespace TestCharacter
             ClassDTO dtoclass = new ClassDTO
             {
                 Id = newClass.Id,
-                ClassName = (Class.ClassName)1,
-                statModifier = 1,
+                ClassName = "Unicorn",
+                StatModifier = 1,
                 Skills = new List<ClassSkill> { }
             };
 
@@ -130,10 +130,10 @@ namespace TestCharacter
 
             await repository.AddAbilityToClass(newClass.Id, skill.Id); //this makes a classSkill
 
-            Assert.Contains(actualClass.ClassSkills, e => e.ClassId == newClass.Id);
+            Assert.Contains(actualClass.Skills, e => e.ClassId == newClass.Id);
 
             await repository.RemoveAbilityFromClass(actualClass.Id, skill.Id);
-            Assert.DoesNotContain(actualClass.ClassSkills, e => e.ClassId == newClass.Id);
+            Assert.DoesNotContain(actualClass.Skills, e => e.ClassId == newClass.Id);
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace TestCharacter
             RaceDTO dtorace = new RaceDTO
             {
                 Id = race.Id,
-                RaceType = (Race.RaceTypes)1,
+                RaceType = "Hobit",
                 StatModifer = 1,
                 DTOAbilities = new List<RaceAbility> { },
             };

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomCharacter.Migrations
 {
     [DbContext(typeof(CustomCharacterContext))]
-    [Migration("20210210001107_add-character")]
-    partial class addcharacter
+    [Migration("20210210183720_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -178,8 +178,8 @@ namespace CustomCharacter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClassNames")
-                        .HasColumnType("int");
+                    b.Property<string>("ClassName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatModifier")
                         .HasColumnType("int");
@@ -192,7 +192,7 @@ namespace CustomCharacter.Migrations
                         new
                         {
                             Id = 1,
-                            ClassNames = 1,
+                            ClassName = "Barbarian",
                             StatModifier = 2
                         });
                 });
@@ -226,8 +226,8 @@ namespace CustomCharacter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("RaceType")
-                        .HasColumnType("int");
+                    b.Property<string>("RaceType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatModifier")
                         .HasColumnType("int");
@@ -240,7 +240,7 @@ namespace CustomCharacter.Migrations
                         new
                         {
                             Id = 1,
-                            RaceType = 3,
+                            RaceType = "Human",
                             StatModifier = 2
                         });
                 });

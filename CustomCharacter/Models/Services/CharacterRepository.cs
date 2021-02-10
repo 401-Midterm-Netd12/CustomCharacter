@@ -24,7 +24,7 @@ namespace CustomCharacter.Models.Services
                 ClassId = CharacterDTO.ClassId,
                 RaceId = CharacterDTO.RaceId,
                 Name = CharacterDTO.Name,
-                UserId = CharacterDTO.UserId, //feel like I should be just able to grab the current users ID
+                UserId = CharacterDTO.UserId, 
                 HP = CharacterDTO.HP,
                 Dex = CharacterDTO.Dex,
                 Strength = CharacterDTO.Strength
@@ -52,8 +52,8 @@ namespace CustomCharacter.Models.Services
                                         CharClassDTO = new ClassDTO()
                                         {
                                             Id = c.CharClass.Id,
-                                            statModifier = c.CharClass.StatModifier,
-                                            ClassName = c.CharClass.ClassNames,
+                                            StatModifier = c.CharClass.StatModifier,
+                                            ClassName = c.CharClass.ClassName,
                                             Skills = c.CharClass.ClassSkills
                                                                 .Select(cs => new ClassSkill()
                                                                 {
@@ -92,19 +92,6 @@ namespace CustomCharacter.Models.Services
                                         }
 
                                     }).FirstOrDefaultAsync();
-            //Character character = await _context.Characters.FindAsync(Id);
-
-            //CharacterDTO characterDTO = new CharacterDTO()
-            //{
-            //    Id = Id,
-            //    Name = character.Name,
-            //    UserId = character.UserId,
-            //    RaceId = character.RaceId,
-            //    ClassId = character.ClassId,
-            //    Strength = character.Strength,
-            //    HP = character.HP,
-            //    Dex = character.Dex
-            //};
 
             ////TODO: Get abilities and skills form race and class
             return newCharacterDTO;
@@ -126,8 +113,8 @@ namespace CustomCharacter.Models.Services
                                         CharClassDTO = new ClassDTO()
                                         {
                                             Id = c.CharClass.Id,
-                                            statModifier = c.CharClass.StatModifier,
-                                            ClassName = c.CharClass.ClassNames,
+                                            StatModifier = c.CharClass.StatModifier,
+                                            ClassName = c.CharClass.ClassName,
                                             Skills = c.CharClass.ClassSkills
                                                                 .Select(cs => new ClassSkill()
                                                                 {
