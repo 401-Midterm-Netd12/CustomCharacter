@@ -37,7 +37,6 @@ namespace TestCharacter
         {
             var testChar = new Character
             {
-                Id = 1,
                 UserId = "fedeed64-6693-4508-8e0e-ec41c9400da6",
                 RaceId = 1,
                 ClassId = 1,
@@ -93,11 +92,11 @@ namespace TestCharacter
             {
                 Desc = "You can now see in the night!",
                 Name = "NightSight",
-                ClassId = 5
+                //ClassId = 5,
             };
             _db.Skills.Add(skill);
             await _db.SaveChangesAsync();
-            _db.Entry(skill).State = EntityState.Deleted;
+            _db.Entry(skill).State = EntityState.Detached;
 
             Assert.NotNull(skill.Name);
             return skill;
@@ -114,7 +113,7 @@ namespace TestCharacter
             };
             _db.ClassSkills.Add(classSkill);
             await _db.SaveChangesAsync();
-            _db.Entry(classSkill).State = EntityState.Deleted;
+            _db.Entry(classSkill).State = EntityState.Detached;
 
             Assert.NotEqual(0, classSkill.ClassId);
             return classSkill;
@@ -124,7 +123,6 @@ namespace TestCharacter
         {
             var race = new Race
             {
-                //Id = 3,
                 RaceType = "Monke",
                 Abilities = new List<RaceAbility> { },
                 StatModifier = 3
@@ -141,7 +139,7 @@ namespace TestCharacter
         {
             var testClass = new Class
             {
-                Id = 88,
+                //Id = 88,
                 StatModifier = 2,
                 ClassNames = "Paladin",
                 ClassSkills = new List<ClassSkill> { }

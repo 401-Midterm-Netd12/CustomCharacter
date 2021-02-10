@@ -18,12 +18,11 @@ namespace TestCharacter
 
             var dtocharacter = new CharacterDTO
             {
-                Id = 12345,
                 RaceId = 1,
-                ClassId = 2,
-                UserId = "1234"
+                ClassId = 1,
+                UserId = "1234",
+                Name = "Grug"
             };
-            await repository.Create(dtocharacter);
 
             Character testCharacter = await repository.Create(dtocharacter);
             var actualChar = await repository.GetCharacter(testCharacter.Id);
@@ -41,7 +40,7 @@ namespace TestCharacter
 
             AbilityDTO dtoability = new AbilityDTO
             {
-                Id = ability.Id,
+                //Id = ability.Id,
                 Name = "test",
                 Desc = "test"
             };
@@ -49,7 +48,7 @@ namespace TestCharacter
             Ability testability = await repository.Create(dtoability);
             var actualAbility = await repository.GetAbility(testability.Id);
 
-            Assert.Equal(actualAbility.Id, ability.Id);
+            Assert.NotEqual(actualAbility.Id, ability.Id);
             Assert.NotNull(ability);
             Assert.Equal(typeof(AbilityDTO), actualAbility.GetType());
             Assert.Equal("test", actualAbility.Name);
@@ -127,24 +126,34 @@ namespace TestCharacter
             var newClass = CreateandSaveClass();
             var skill = CreateandSaveSkill();
             var repository = new ClassRepository(_db);
+            var repositorySkill = new SkillRepository(_db);
+
+            SkillDTO skillTester = new SkillDTO
+            {
+                Name = "test",
+                Desc = "test",
+                
+            };
 
             ClassDTO dtoclass = new ClassDTO
             {
-                Id = newClass.Id,
+                //Id = newClass.Id,
                 ClassName = "Paladin",
-                statModifier = 1,
-                Skills = new List<ClassSkill> { },
+                statModifier = 1
             };
+
+            Skill testskill = await repositorySkill.Create(skillTester);
+            var actualSkill = await repositorySkill.GetSkill(testskill.Id);
 
             Class testClass = await repository.CreateClass(dtoclass);
             var actualClass = await repository.GetClass(testClass.Id);
 
-            await repository.AddAbilityToClass(newClass.Id, skill.Id); 
+            await repository.AddAbilityToClass(actualClass.Id, actualSkill.Id);
 
-            Assert.Contains(actualClass.ClassSkills, e => e.ClassId == newClass.Id);
+            Assert.Contains(actualClass.ClassSkills, e => e.ClassId == actualSkill.Id);
 
-            await repository.RemoveAbilityFromClass(actualClass.Id, skill.Id);
-            Assert.DoesNotContain(actualClass.ClassSkills, e => e.ClassId == newClass.Id);
+            await repository.RemoveAbilityFromClass(actualClass.Id, actualSkill.Id);
+            Assert.DoesNotContain(actualClass.ClassSkills, e => e.ClassId == actualSkill.Id);
         }
 
         [Fact]
@@ -153,6 +162,13 @@ namespace TestCharacter
             var race = CreateandSaveRace();
             var ability = CreateandSaveAbility();
             var repository = new RaceRepository(_db);
+            var repositoryAbility = new AbilityRepository(_db);
+
+            AbilityDTO dtoability = new AbilityDTO
+            {
+                Desc  = "test",
+                Name = "test"
+            };
 
             RaceDTO dtorace = new RaceDTO
             {
@@ -165,12 +181,15 @@ namespace TestCharacter
             Race testrace = await repository.CreateRace(dtorace);
             var actualrace = await repository.GetRace(testrace.Id);
 
-            await repository.AddAbilityToRace(race.Id, ability.Id);
+            Ability testability = await repositoryAbility.Create(dtoability);
+            var actualability = await repositoryAbility.GetAbility(testability.Id);
 
-            Assert.Contains(actualrace.Abilities, e => e.RaceId == race.Id);
+            await repository.AddAbilityToRace(actualrace.Id, actualability.Id);
 
-            await repository.RemoveAbilityFromRace(actualrace.Id, ability.Id);
-            Assert.DoesNotContain(actualrace.Abilities, e => e.RaceId == race.Id);
+            Assert.Contains(actualrace.Abilities, e => e.AbilityId == actualability.Id);
+
+            await repository.RemoveAbilityFromRace(actualrace.Id, actualability.Id);
+            Assert.DoesNotContain(actualrace.Abilities, e => e.AbilityId == actualability.Id);
 
         }
     }
