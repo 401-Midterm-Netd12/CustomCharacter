@@ -19,7 +19,7 @@ namespace CustomCharacter.Models.Services
 
         }
 
-        public async Task<RaceDTO> CreateRace(RaceDTO raceDTO)
+        public async Task<Race> CreateRace(RaceDTO raceDTO)
         {
             Race newRace = new Race()
             {
@@ -31,12 +31,12 @@ namespace CustomCharacter.Models.Services
 
             _context.Entry(newRace).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            return raceDTO;
+            return newRace;
         }
 
         public async Task<Race> GetRace(int Id)
         {
-            var race = await _context.Races.Include(Race => Race.Id == Id).FirstOrDefaultAsync();
+            var race = await _context.Races.Where(Race => Race.Id == Id).FirstOrDefaultAsync();
 
             RaceDTO raceDTO = new RaceDTO()
             {
