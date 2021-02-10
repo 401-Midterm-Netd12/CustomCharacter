@@ -42,7 +42,7 @@ namespace CustomCharacter.Models.Services
                 Id = Id,
                 RaceType = race.RaceType,
                 StatModifer = race.StatModifier,
-                DTOAbilities = race.Abilities.ToList()
+               
 
             };
             return race;
@@ -85,11 +85,12 @@ namespace CustomCharacter.Models.Services
 
         public async Task<Race> UpdateRace(RaceDTO raceDTO)
         {
-            var race = await GetRace(raceDTO.Id);
-            race.Id = raceDTO.Id;
-            race.RaceType = raceDTO.RaceType;
-            race.StatModifier = raceDTO.StatModifer;
-            race.Abilities = raceDTO.DTOAbilities.ToList();
+            Race race = new Race()
+            {
+                Id = raceDTO.Id,
+                RaceType = raceDTO.RaceType,
+                StatModifier = raceDTO.StatModifer
+            };
 
             _context.Entry(race).State = EntityState.Modified;
             await _context.SaveChangesAsync();

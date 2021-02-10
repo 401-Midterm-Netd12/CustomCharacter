@@ -12,7 +12,7 @@ namespace CustomCharacter.Models
         public List<ClassSkill> ClassSkills { get; set; }
 
         public string ClassName { get; set; }
-        //public enum ClassName { Barbarian = 1, Mage = 2, Ranger = 3, Rogue = 4, Knight = 5, Monk = 6, Bard = 7 }
+       
 
     }
 }

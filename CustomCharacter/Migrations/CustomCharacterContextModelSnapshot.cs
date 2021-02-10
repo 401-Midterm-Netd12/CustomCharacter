@@ -38,6 +38,15 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Abilities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Desc = "Deadly stank breath.",
+                            Name = "Beer Breath",
+                            RaceId = 1
+                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.AppUser", b =>
@@ -145,6 +154,19 @@ namespace CustomCharacter.Migrations
                     b.HasIndex("RaceId");
 
                     b.ToTable("Characters");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClassId = 1,
+                            Dex = 2,
+                            HP = 10,
+                            Name = "Bob's guy",
+                            RaceId = 1,
+                            Strength = 10,
+                            UserId = "fedeed64-6693-4508-8e0e-ec41c9400da6"
+                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Class", b =>
@@ -163,6 +185,14 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Classes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClassName = "Barbarian",
+                            StatModifier = 2
+                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.ClassSkill", b =>
@@ -178,6 +208,13 @@ namespace CustomCharacter.Migrations
                     b.HasIndex("SkillId");
 
                     b.ToTable("ClassSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            ClassId = 1,
+                            SkillId = 1
+                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Race", b =>
@@ -196,6 +233,14 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Races");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RaceType = "Human",
+                            StatModifier = 2
+                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.RaceAbility", b =>
@@ -211,6 +256,13 @@ namespace CustomCharacter.Migrations
                     b.HasIndex("AbilityId");
 
                     b.ToTable("RaceAbilities");
+
+                    b.HasData(
+                        new
+                        {
+                            RaceId = 1,
+                            AbilityId = 1
+                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Skill", b =>
@@ -232,6 +284,15 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClassId = 1,
+                            Desc = "Can drunkenly dodge attacks.",
+                            Name = "Swaggered walk"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -98,7 +98,7 @@ namespace TestCharacter
             {
                 Id = newClass.Id,
                 ClassName = "Knight",
-                statModifier = 1,
+                StatModifier = 1,
                 Skills = new List<ClassSkill> { }
             };
 
@@ -121,7 +121,7 @@ namespace TestCharacter
             {
                 Id = newClass.Id,
                 ClassName = "Unicorn",
-                statModifier = 1,
+                StatModifier = 1,
                 Skills = new List<ClassSkill> { }
             };
 
@@ -130,10 +130,10 @@ namespace TestCharacter
 
             await repository.AddAbilityToClass(newClass.Id, skill.Id); //this makes a classSkill
 
-            Assert.Contains(actualClass.ClassSkills, e => e.ClassId == newClass.Id);
+            Assert.Contains(actualClass.Skills, e => e.ClassId == newClass.Id);
 
             await repository.RemoveAbilityFromClass(actualClass.Id, skill.Id);
-            Assert.DoesNotContain(actualClass.ClassSkills, e => e.ClassId == newClass.Id);
+            Assert.DoesNotContain(actualClass.Skills, e => e.ClassId == newClass.Id);
         }
 
         [Fact]

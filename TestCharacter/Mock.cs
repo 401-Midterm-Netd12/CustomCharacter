@@ -151,7 +151,7 @@ namespace TestCharacter
             {
                 //Id = 88,
                 StatModifier = 2,
-                //ClassName = (Class.ClassName)2,
+                ClassName = "Archer",
                 ClassSkills = new List<ClassSkill> { }
             };
             _db.Classes.Add(testClass);

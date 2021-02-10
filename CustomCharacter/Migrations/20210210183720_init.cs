@@ -82,7 +82,7 @@ namespace CustomCharacter.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StatModifier = table.Column<int>(nullable: false),
-                    RaceType = table.Column<int>(nullable: false)
+                    RaceType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -297,19 +297,34 @@ namespace CustomCharacter.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "dungeonmaster", "00000000-0000-0000-0000-000000000000", "DungeonMaster", "DUNGEONMASTER" });
+                table: "Abilities",
+                columns: new[] { "Id", "Desc", "Name", "RaceId" },
+                values: new object[] { 1, "Deadly stank breath.", "Beer Breath", 1 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "creator", "00000000-0000-0000-0000-000000000000", "Creator", "CREATOR" });
+                values: new object[,]
+                {
+                    { "dungeonmaster", "00000000-0000-0000-0000-000000000000", "DungeonMaster", "DUNGEONMASTER" },
+                    { "creator", "00000000-0000-0000-0000-000000000000", "Creator", "CREATOR" },
+                    { "player", "00000000-0000-0000-0000-000000000000", "Player", "PLAYER" }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "player", "00000000-0000-0000-0000-000000000000", "Player", "PLAYER" });
+                table: "Classes",
+                columns: new[] { "Id", "ClassName", "StatModifier" },
+                values: new object[] { 1, "Barbarian", 2 });
+
+            migrationBuilder.InsertData(
+                table: "Races",
+                columns: new[] { "Id", "RaceType", "StatModifier" },
+                values: new object[] { 1, "Human", 2 });
+
+            migrationBuilder.InsertData(
+                table: "Skills",
+                columns: new[] { "Id", "ClassId", "Desc", "Name" },
+                values: new object[] { 1, 1, "Can drunkenly dodge attacks.", "Swaggered walk" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoleClaims",
@@ -323,6 +338,21 @@ namespace CustomCharacter.Migrations
                     { 5, "permissions", "update", "creator" },
                     { 6, "permissions", "create", "player" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Characters",
+                columns: new[] { "Id", "CharAppUserId", "ClassId", "Dex", "HP", "Name", "RaceId", "Strength", "UserId" },
+                values: new object[] { 1, null, 1, 2, 10, "Bob's guy", 1, 10, "fedeed64-6693-4508-8e0e-ec41c9400da6" });
+
+            migrationBuilder.InsertData(
+                table: "ClassSkills",
+                columns: new[] { "ClassId", "SkillId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "RaceAbilities",
+                columns: new[] { "RaceId", "AbilityId" },
+                values: new object[] { 1, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
