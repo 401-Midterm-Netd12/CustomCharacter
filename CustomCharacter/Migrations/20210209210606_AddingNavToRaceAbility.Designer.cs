@@ -4,14 +4,16 @@ using CustomCharacter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CustomCharacter.Migrations
 {
     [DbContext(typeof(CustomCharacterContext))]
-    partial class CustomCharacterContextModelSnapshot : ModelSnapshot
+    [Migration("20210209210606_AddingNavToRaceAbility")]
+    partial class AddingNavToRaceAbility
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,15 +120,6 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Abilities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Desc = "Deadly stank breath.",
-                            Name = "Beer Breath",
-                            RaceId = 1
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.AppUser", b =>
@@ -222,8 +215,8 @@ namespace CustomCharacter.Migrations
                     b.Property<int>("Strength")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -234,19 +227,6 @@ namespace CustomCharacter.Migrations
                     b.HasIndex("RaceId");
 
                     b.ToTable("Characters");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClassId = 1,
-                            Dex = 2,
-                            HP = 10,
-                            Name = "Bob's guy",
-                            RaceId = 1,
-                            Strength = 10,
-                            UserId = "fedeed64-6693-4508-8e0e-ec41c9400da6"
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Class", b =>
@@ -265,14 +245,6 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Classes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClassNames = 1,
-                            StatModifier = 2
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.ClassSkill", b =>
@@ -291,13 +263,6 @@ namespace CustomCharacter.Migrations
                     b.HasIndex("ClassNavId");
 
                     b.ToTable("ClassSkills");
-
-                    b.HasData(
-                        new
-                        {
-                            ClassId = 1,
-                            SkillId = 1
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Race", b =>
@@ -316,14 +281,6 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Races");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            RaceType = 3,
-                            StatModifier = 2
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.RaceAbility", b =>
@@ -334,28 +291,19 @@ namespace CustomCharacter.Migrations
                     b.Property<int>("AbilityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AbilityInRaceId")
+                    b.Property<int?>("AbilityListId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RaceInRaceId")
+                    b.Property<int?>("RaceListId")
                         .HasColumnType("int");
 
                     b.HasKey("RaceId", "AbilityId");
 
-                    b.HasIndex("AbilityId");
+                    b.HasIndex("AbilityListId");
 
-                    b.HasIndex("AbilityInRaceId");
-
-                    b.HasIndex("RaceInRaceId");
+                    b.HasIndex("RaceListId");
 
                     b.ToTable("RaceAbilities");
-
-                    b.HasData(
-                        new
-                        {
-                            RaceId = 1,
-                            AbilityId = 1
-                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Skill", b =>
@@ -377,15 +325,6 @@ namespace CustomCharacter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClassId = 1,
-                            Desc = "Can drunkenly dodge attacks.",
-                            Name = "Swaggered walk"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -627,15 +566,9 @@ namespace CustomCharacter.Migrations
 
             modelBuilder.Entity("CustomCharacter.Models.RaceAbility", b =>
                 {
-                    b.HasOne("CustomCharacter.Models.Ability", null)
-                        .WithMany("AbilityList")
-                        .HasForeignKey("AbilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CustomCharacter.Models.API.AbilityDTO", "AbilityInRace")
+                    b.HasOne("CustomCharacter.Models.API.AbilityDTO", "AbilityList")
                         .WithMany("Abilities")
-                        .HasForeignKey("AbilityInRaceId");
+                        .HasForeignKey("AbilityListId");
 
                     b.HasOne("CustomCharacter.Models.Race", null)
                         .WithMany("Abilities")
@@ -643,9 +576,9 @@ namespace CustomCharacter.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CustomCharacter.Models.API.RaceDTO", "RaceInRace")
+                    b.HasOne("CustomCharacter.Models.API.RaceDTO", "RaceList")
                         .WithMany("DTOAbilities")
-                        .HasForeignKey("RaceInRaceId");
+                        .HasForeignKey("RaceListId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

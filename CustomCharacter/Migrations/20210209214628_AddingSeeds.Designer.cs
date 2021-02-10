@@ -4,14 +4,16 @@ using CustomCharacter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CustomCharacter.Migrations
 {
     [DbContext(typeof(CustomCharacterContext))]
-    partial class CustomCharacterContextModelSnapshot : ModelSnapshot
+    [Migration("20210209214628_AddingSeeds")]
+    partial class AddingSeeds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,6 +194,20 @@ namespace CustomCharacter.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "cad8346b-f4c5-477d-b300-4b7c8000c9c5",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7b5e7cf2-4b96-4e10-876f-180f009e6b51",
+                            TwoFactorEnabled = false,
+                            UserName = "Bob"
+                        });
                 });
 
             modelBuilder.Entity("CustomCharacter.Models.Character", b =>
@@ -245,7 +261,7 @@ namespace CustomCharacter.Migrations
                             Name = "Bob's guy",
                             RaceId = 1,
                             Strength = 10,
-                            UserId = "fedeed64-6693-4508-8e0e-ec41c9400da6"
+                            UserId = "1"
                         });
                 });
 
