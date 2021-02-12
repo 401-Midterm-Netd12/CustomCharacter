@@ -32,8 +32,10 @@ namespace CustomCharacter.Models.Services
             Class newClass = new Class()
             {
                 Id = classDTO.Id,
+
                 StatModifier = classDTO.StatModifier,
                 ClassName = classDTO.ClassName
+
             };
             _context.Entry(newClass).State = EntityState.Added;
             await _context.SaveChangesAsync();
@@ -50,12 +52,16 @@ namespace CustomCharacter.Models.Services
 
         public async Task<ClassDTO> GetClass(int Id)
         {
-            var result = await _context.Classes.Where(x => x.Id == Id).FirstOrDefaultAsync();
+            var result = await _context.Classes
+                .Where(x => x.Id == Id)
+                //.Include(x => x.ClassSkills)
+                .FirstOrDefaultAsync();
 
             ClassDTO dtoClass = new ClassDTO()
             {
                 ClassName = result.ClassName,
                 Id = Id,
+
                 StatModifier = result.StatModifier,
             };
             return dtoClass;

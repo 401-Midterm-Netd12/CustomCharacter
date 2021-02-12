@@ -11,8 +11,9 @@ namespace CustomCharacter.Models
         public int StatModifier { get; set; }
         public List<ClassSkill> ClassSkills { get; set; }
 
+
         public string ClassName { get; set; }
-       
+
 
     }
 }
