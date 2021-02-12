@@ -23,7 +23,7 @@ namespace CustomCharacter.Models.Services
                 ClassId = classId,
                 SkillId = abilityId
             };
-            _context.Entry(ability).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+            _context.Entry(ability).State = EntityState.Added;
             await _context.SaveChangesAsync();
         }
 
@@ -32,8 +32,10 @@ namespace CustomCharacter.Models.Services
             Class newClass = new Class()
             {
                 Id = classDTO.Id,
-                //ClassSkills = classDTO.Skills.ToList(),
-                StatModifier = classDTO.statModifier
+
+                StatModifier = classDTO.StatModifier,
+                ClassName = classDTO.ClassName
+
             };
             _context.Entry(newClass).State = EntityState.Added;
             await _context.SaveChangesAsync();
@@ -48,7 +50,7 @@ namespace CustomCharacter.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Class> GetClass(int Id)
+        public async Task<ClassDTO> GetClass(int Id)
         {
             var result = await _context.Classes
                 .Where(x => x.Id == Id)
@@ -57,24 +59,25 @@ namespace CustomCharacter.Models.Services
 
             ClassDTO dtoClass = new ClassDTO()
             {
-                ClassName = result.ClassNames,
+                ClassName = result.ClassName,
                 Id = Id,
-                statModifier = result.StatModifier
-                //Skills = result.ClassSkills.ToList()
+
+                StatModifier = result.StatModifier,
             };
-            return result;
+            return dtoClass;
         }
 
         public async Task<List<ClassDTO>> GetClasses()
         {
-            var result = await _context.Classes.Include(x => x.Id).ToListAsync();
+            var result = await _context.Classes.ToListAsync();
+
             return result
                 .Select(stuff => new ClassDTO
                 {
-                    ClassName = stuff.ClassNames,
+                    ClassName = stuff.ClassName,
                     Id = stuff.Id,
-                    statModifier = stuff.StatModifier,
-                    Skills = stuff.ClassSkills.ToList()
+                    StatModifier = stuff.StatModifier,
+                   
                 }).ToList();
         }
 
@@ -85,17 +88,18 @@ namespace CustomCharacter.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Class> UpdateClass(ClassDTO classDTO)
+        public async Task<Class> UpdateClass(Class Class)
         {
-            var result = await GetClass(classDTO.Id);
-            result.Id = classDTO.Id;
-            result.ClassNames = classDTO.ClassName;
-            result.StatModifier = classDTO.statModifier;
-            result.ClassSkills = classDTO.Skills.ToList();
+            Class newClass = new Class()
+            {
+                Id = Class.Id,
+                ClassName = Class.ClassName,
+                StatModifier = Class.StatModifier,
+            };
 
-            _context.Entry(result).State = EntityState.Modified;
+            _context.Entry(newClass).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return result;
+            return newClass;
         }
     }
 }

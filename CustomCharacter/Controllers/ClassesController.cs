@@ -32,9 +32,9 @@ namespace CustomCharacter.Controllers
 
         // GET: api/Classes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Class>> GetClass(int id)
+        public async Task<ActionResult<ClassDTO>> GetClass(int id)
         {
-            Class classObj = await _class.GetClass(id);
+            ClassDTO classObj = await _class.GetClass(id);
 
             if (classObj == null)
             {
@@ -48,9 +48,9 @@ namespace CustomCharacter.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClass(ClassDTO classDTO)
+        public async Task<IActionResult> PutClass(Class Class)
         {
-            var updatedClass = await _class.UpdateClass(classDTO);
+            var updatedClass = await _class.UpdateClass(Class);
             return Ok(updatedClass);
         }
 
@@ -61,7 +61,7 @@ namespace CustomCharacter.Controllers
         public async Task<ActionResult<Class>> PostClass(ClassDTO classDTO)
         {
             await _class.CreateClass(classDTO);
-            return CreatedAtAction("GetRooms", new { id = classDTO.Id }, classDTO);
+            return CreatedAtAction("GetClasses", new { id = classDTO.Id }, classDTO);
         }
 
         // DELETE: api/Classes/5

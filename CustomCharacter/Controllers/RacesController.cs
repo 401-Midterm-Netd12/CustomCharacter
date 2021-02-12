@@ -55,7 +55,7 @@ namespace CustomCharacter.Controllers
         public async Task<ActionResult<Race>> PostRace(RaceDTO race)
         {
             await _race.CreateRace(race);
-            return CreatedAtAction("GetRace", new { Id = race.Id, race });
+            return CreatedAtAction("GetRace", new { Id = race.Id }, race );
         }
 
         // DELETE: api/Races/5

@@ -86,7 +86,8 @@ namespace TestCharacter
             {
                 //Id = race.Id,
                 DTOAbilities = new List<RaceAbility> { },
-                RaceType = "Monke",
+
+                RaceType = "Human",
                 StatModifer = 1,
             };
 
@@ -107,8 +108,9 @@ namespace TestCharacter
             ClassDTO dtoclass = new ClassDTO
             {
                 Id = newClass.Id,
-                ClassName = "Paladin",
-                statModifier = 1,
+
+                ClassName = "Knight",
+                StatModifier = 1,
                 Skills = new List<ClassSkill> { }
             };
 
@@ -137,9 +139,11 @@ namespace TestCharacter
 
             ClassDTO dtoclass = new ClassDTO
             {
-                //Id = newClass.Id,
-                ClassName = "Paladin",
-                statModifier = 1
+
+                Id = newClass.Id,
+                ClassName = "Unicorn",
+                StatModifier = 1,
+                Skills = new List<ClassSkill> { }
             };
 
             Skill testskill = await repositorySkill.Create(skillTester);
@@ -150,10 +154,11 @@ namespace TestCharacter
 
             await repository.AddAbilityToClass(actualClass.Id, actualSkill.Id);
 
-            Assert.Contains(actualClass.ClassSkills, e => e.ClassId == actualSkill.Id);
 
-            await repository.RemoveAbilityFromClass(actualClass.Id, actualSkill.Id);
-            Assert.DoesNotContain(actualClass.ClassSkills, e => e.ClassId == actualSkill.Id);
+            Assert.Contains(actualClass.Skills, e => e.ClassId == newClass.Id);
+
+            await repository.RemoveAbilityFromClass(actualClass.Id, skill.Id);
+            Assert.DoesNotContain(actualClass.Skills, e => e.ClassId == newClass.Id);
         }
 
         [Fact]
@@ -173,7 +178,8 @@ namespace TestCharacter
             RaceDTO dtorace = new RaceDTO
             {
                 Id = race.Id,
-                RaceType = "Monke",
+
+                RaceType = "Hobit",
                 StatModifer = 1,
                 DTOAbilities = new List<RaceAbility> { },
             };

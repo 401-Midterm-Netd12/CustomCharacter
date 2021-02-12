@@ -13,5 +13,6 @@ namespace CustomCharacter.Models
         public int StatModifier { get; set; }
         public string RaceType { get; set; }
         public List<RaceAbility> Abilities { get; set; }
+
     }
 }

@@ -42,7 +42,7 @@ namespace CustomCharacter.Controllers
         public async Task<ActionResult<CharacterDTO>> PostCharater(CharacterDTO characterDTO)
         {
             await _character.Create(characterDTO);
-            return CreatedAtAction("GetCharater", new { Id = characterDTO.Id, characterDTO});
+            return CreatedAtAction("GetCharater", new { Id = characterDTO.Id }, characterDTO);
 
         }
 

@@ -123,9 +123,10 @@ namespace TestCharacter
         {
             var race = new Race
             {
-                RaceType = "Monke",
-                Abilities = new List<RaceAbility> { },
-                StatModifier = 3
+
+                Id = 3,
+                RaceType = "Org",
+                Abilities = new List<RaceAbility> { }
             };
             _db.Races.Add(race);
             await _db.SaveChangesAsync();
@@ -141,7 +142,8 @@ namespace TestCharacter
             {
                 //Id = 88,
                 StatModifier = 2,
-                ClassNames = "Paladin",
+
+                ClassName = "Archer",
                 ClassSkills = new List<ClassSkill> { }
             };
             _db.Classes.Add(testClass);

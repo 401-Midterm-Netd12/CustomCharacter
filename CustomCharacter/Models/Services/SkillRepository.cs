@@ -37,10 +37,10 @@ namespace CustomCharacter.Models.Services
 
         public async Task<List<SkillDTO>> GetSkills()
         {
-            var abilities = await _context.Abilities.ToListAsync();
+            var skills = await _context.Skills.ToListAsync();
             var SkillList = new List<SkillDTO>();
 
-            foreach (var Skill in abilities)
+            foreach (var Skill in skills)
                 SkillList.Add(await GetSkill(Skill.Id));
 
             return SkillList;

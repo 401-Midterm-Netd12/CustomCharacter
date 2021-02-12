@@ -4,14 +4,16 @@ using CustomCharacter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CustomCharacter.Migrations
 {
     [DbContext(typeof(CustomCharacterContext))]
-    partial class CustomCharacterContextModelSnapshot : ModelSnapshot
+    [Migration("20210210183720_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,8 +178,7 @@ namespace CustomCharacter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClassNames")
-
+                    b.Property<string>("ClassName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatModifier")
@@ -191,9 +192,7 @@ namespace CustomCharacter.Migrations
                         new
                         {
                             Id = 1,
-
                             ClassName = "Barbarian",
-
                             StatModifier = 2
                         });
                 });

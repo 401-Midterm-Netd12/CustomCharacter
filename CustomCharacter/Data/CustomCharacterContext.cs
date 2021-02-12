@@ -31,7 +31,7 @@ namespace CustomCharacter.Data
             seedRole(modelBuilder, "Creator", "create", "update");
             seedRole(modelBuilder, "Player", "create");
 
-            
+
             modelBuilder.Entity<Character>().HasData(new Character
             {
                 Id = 1,
@@ -52,7 +52,7 @@ namespace CustomCharacter.Data
             modelBuilder.Entity<Class>().HasData(new Class
             {
                 Id = 1,
-                ClassNames = "Barbarian",
+                ClassName = "Barbarian",
                 StatModifier = 2
             });
             modelBuilder.Entity<RaceAbility>().HasData(new RaceAbility
@@ -70,7 +70,7 @@ namespace CustomCharacter.Data
                 Id = 1,
                 RaceId = 1,
                 Name = "Beer Breath",
-                Desc = "Deadly stank breath."            
+                Desc = "Deadly stank breath."
             });
             modelBuilder.Entity<Skill>().HasData(new Skill
             {
