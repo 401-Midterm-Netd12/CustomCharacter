@@ -37,12 +37,12 @@ namespace CustomCharacter.Models.Services
             };
 
         }
-        //IConfiguration 
+
         /// <summary>
         /// gets the sec key
         /// </summary>
         /// <param name="configuration"></param>
-        /// <returns>securitykey</returns>
+        /// <returns>SecurityKey</returns>
         public static SecurityKey GetSecurityKey(IConfiguration configuration)
         {
             var secret = configuration["JWT:Secret"];
@@ -55,12 +55,13 @@ namespace CustomCharacter.Models.Services
 
             return new SymmetricSecurityKey(secretBytes);
         }
+
         /// <summary>
         /// gets a token
         /// </summary>
         /// <param name="user"></param>
         /// <param name="expiresIn"></param>
-        /// <returns>token</returns>
+        /// <returns>string Token</returns>
         public async Task<string> GetToken(AppUser user, System.TimeSpan expiresIn)
         {
             var principal = await signinManager.CreateUserPrincipalAsync(user);

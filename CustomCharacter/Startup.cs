@@ -53,19 +53,37 @@ namespace CustomCharacter
             })
                 .AddJwtBearer(options =>
                 {
-                    //TODO: Write GetValidationParams
                     options.TokenValidationParameters = JwtTokenService.GetValidationParams(Configuration);
                 });
 
+            services.AddAuthorization(options =>
+            {
+                // Add "Name of Policy", and the Lambda returns a definition
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
+            });
+
             services.AddTransient<IAbility, AbilityRepository>();
-            services.AddTransient<IClass, ClassRepository>();
-            services.AddTransient<IRace, RaceRepository>();
-            services.AddTransient<IAppUser, IdentityUserService>();
+            services.AddTransient<IClass, ClassRepository>();      //ameilia
+            services.AddTransient<IRace, RaceRepository>();        //ameilia
+            services.AddTransient<IUserService, IdentityUserService>();
             services.AddTransient<ICharacter, CharacterRepository>();
+            services.AddTransient<ISkill, SkillRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
           );
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Custom Characters",
+                    Version = "v1"
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +95,8 @@ namespace CustomCharacter
             }
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             //=================================================================== Swagger
             app.UseSwagger(options =>
@@ -88,16 +107,13 @@ namespace CustomCharacter
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/api/v1/swagger.json", "Custom Characters");
-                options.RoutePrefix = "swagger";
+                options.RoutePrefix = "";
             });
 
             //==================================================================
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }

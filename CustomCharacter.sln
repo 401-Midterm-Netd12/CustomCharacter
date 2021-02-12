@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomCharacter", "CustomCharacter\CustomCharacter.csproj", "{6813AF64-6F21-41C7-B44B-AD5824F675EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCharacter", "TestCharacter\TestCharacter.csproj", "{2031AD37-43A4-4C01-B350-A5AF5E02C88C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCharacter", "TestCharacter\TestCharacter.csproj", "{2031AD37-43A4-4C01-B350-A5AF5E02C88C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
