@@ -11,5 +11,6 @@ namespace CustomCharacter.Models
         public int ClassId { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; }
+        public List<ClassSkill> SkillList { get; set; }
     }
 }

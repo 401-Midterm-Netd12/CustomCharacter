@@ -27,7 +27,7 @@ namespace TestCharacter
             Character testCharacter = await repository.Create(dtocharacter);
             var actualChar = await repository.GetCharacter(testCharacter.Id);
 
-            Assert.Equal(actualChar.Id, newChar.Id);
+            Assert.Equal(actualChar.Id, testCharacter.Id);
             Assert.NotNull(testCharacter);
             Assert.Equal(typeof(CharacterDTO), actualChar.GetType());
         }
@@ -107,7 +107,7 @@ namespace TestCharacter
 
             ClassDTO dtoclass = new ClassDTO
             {
-                Id = newClass.Id,
+                //Id = newClass.Id,
 
                 ClassName = "Knight",
                 StatModifier = 1,
@@ -117,9 +117,9 @@ namespace TestCharacter
             Class testClass = await repository.CreateClass(dtoclass);
             var actualClass = await repository.GetClass(testClass.Id);
 
-            Assert.Equal(actualClass.Id, dtoclass.Id);
+            Assert.Equal(actualClass.Id, testClass.Id);
             Assert.NotNull(newClass);
-            Assert.Equal(typeof(Class), actualClass.GetType());
+            Assert.Equal(typeof(ClassDTO), actualClass.GetType());
         }
 
         [Fact]
@@ -133,17 +133,18 @@ namespace TestCharacter
             SkillDTO skillTester = new SkillDTO
             {
                 Name = "test",
-                Desc = "test",
+                Desc = "test"
                 
             };
 
             ClassDTO dtoclass = new ClassDTO
             {
 
-                Id = newClass.Id,
+                //Id = newClass.Id,
                 ClassName = "Unicorn",
                 StatModifier = 1,
                 Skills = new List<ClassSkill> { }
+                
             };
 
             Skill testskill = await repositorySkill.Create(skillTester);
@@ -154,8 +155,7 @@ namespace TestCharacter
 
             await repository.AddAbilityToClass(actualClass.Id, actualSkill.Id);
 
-
-            Assert.Contains(actualClass.Skills, e => e.ClassId == newClass.Id);
+            Assert.Contains(actualClass.Skills, e => e.SkillId == actualSkill.Id); //actual skill is 3..skill id is?
 
             await repository.RemoveAbilityFromClass(actualClass.Id, skill.Id);
             Assert.DoesNotContain(actualClass.Skills, e => e.ClassId == newClass.Id);
@@ -177,8 +177,7 @@ namespace TestCharacter
 
             RaceDTO dtorace = new RaceDTO
             {
-                Id = race.Id,
-
+                //Id = race.Id,
                 RaceType = "Hobit",
                 StatModifer = 1,
                 DTOAbilities = new List<RaceAbility> { },

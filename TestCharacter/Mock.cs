@@ -59,7 +59,8 @@ namespace TestCharacter
             var ability = new Ability
             {
                 Desc = "Fireballs of death and....fire",
-                Id = 4,
+                //Id = 4,
+                AbilityList = new List<RaceAbility> { },
                 Name = "Fireball",
             };
             _db.Abilities.Add(ability);
@@ -92,6 +93,7 @@ namespace TestCharacter
             {
                 Desc = "You can now see in the night!",
                 Name = "NightSight",
+                SkillList = new List<ClassSkill> { }
                 //ClassId = 5,
             };
             _db.Skills.Add(skill);
@@ -124,13 +126,13 @@ namespace TestCharacter
             var race = new Race
             {
 
-                Id = 3,
+                StatModifier = 3,
                 RaceType = "Org",
                 Abilities = new List<RaceAbility> { }
             };
             _db.Races.Add(race);
             await _db.SaveChangesAsync();
-            _db.Entry(race).State = EntityState.Deleted;
+            _db.Entry(race).State = EntityState.Detached;
 
             Assert.NotNull(race);
             return race;
@@ -140,15 +142,13 @@ namespace TestCharacter
         {
             var testClass = new Class
             {
-                //Id = 88,
                 StatModifier = 2,
-
                 ClassName = "Archer",
                 ClassSkills = new List<ClassSkill> { }
             };
             _db.Classes.Add(testClass);
             await _db.SaveChangesAsync();
-            _db.Entry(testClass).State = EntityState.Deleted;
+            _db.Entry(testClass).State = EntityState.Detached;
 
             Assert.NotNull(testClass);
             return testClass;
